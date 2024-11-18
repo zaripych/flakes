@@ -68,7 +68,7 @@
               shellInit = ''
                 # A shortcut to refresh the nix-darwin configuration
                 function darwin-refresh() {
-                  darwin-rebuild switch --flake /Users/rz/Projects/zaripych-flakes/macos-flake
+                  darwin-rebuild switch --flake ~/Projects/flakes/macos
                 }
               '';
             };
