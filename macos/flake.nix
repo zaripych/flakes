@@ -74,15 +74,18 @@
             };
           };
         };
+
+        defaultDarwinSystem = nix-darwin.lib.darwinSystem {
+          modules = [ configuration ];
+          specialArgs = { inherit inputs; };
+        };
       in
       {
         # Build darwin flake using:
         # $ darwin-rebuild build --flake .#rz-laptop-21
         packages = {
-          darwinConfigurations.rz-laptop-21 = nix-darwin.lib.darwinSystem {
-            modules = [ configuration ];
-            specialArgs = { inherit inputs; };
-          };
+          darwinConfigurations.rz-laptop-21 = defaultDarwinSystem;
+          darwinConfigurations.Rinat-Propeller-MBP = defaultDarwinSystem;
         };
 
         devShells.default = nixpkgs.mkShell {
