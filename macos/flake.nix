@@ -104,6 +104,7 @@
         # $ darwin-rebuild build --flake .#rz-laptop-21
         packages = {
           darwinConfigurations.rz-laptop-21 = darwin-system;
+          darwinConfigurations.Rinat-Propeller-MBP = darwin-system;
         };
 
         devShells.default = nixpkgs.mkShell {
