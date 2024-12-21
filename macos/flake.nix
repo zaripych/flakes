@@ -16,7 +16,17 @@
   outputs = inputs@{ self, flake-utils, nix-darwin, ... }:
     flake-utils.lib.eachDefaultSystem (system:
       let
-        nixpkgs = import inputs.nixpkgs { inherit system; };
+        nixpkgs = import inputs.nixpkgs {
+          inherit system;
+
+          overlays = [
+            (final: prev: {
+              nodejs = prev.nodejs_20;
+            })
+          ];
+        };
+
+        global-npm-packages = nixpkgs.callPackage ./global-npm-packages { };
 
         configuration = { pkgs, ... }: {
           # List packages installed in system profile. To search by name, run:
@@ -28,11 +38,17 @@
             git-lfs
             jq
             fzf
+            nodejs
+            nodePackages.pnpm
+            # Add global npm packages to ./global-npm-packages/package.json
+            # and run `pnpm install` to update the lock file, after which
+            # you can run `darwin-refresh` to make them globally available
+            global-npm-packages
           ];
 
           # Auto upgrade nix package and the daemon service.
           services.nix-daemon.enable = true;
-          # nix.package = pkgs.nix;
+          nix.package = pkgs.nix;
 
           # Necessary for using flakes on this system.
           nix.settings.experimental-features = "nix-command flakes";
@@ -74,15 +90,20 @@
             };
           };
         };
+
+        darwin-system = nix-darwin.lib.darwinSystem {
+          modules = [ configuration ];
+          specialArgs = {
+            inherit inputs;
+            pkgs = nixpkgs;
+          };
+        };
       in
       {
         # Build darwin flake using:
         # $ darwin-rebuild build --flake .#rz-laptop-21
         packages = {
-          darwinConfigurations.rz-laptop-21 = nix-darwin.lib.darwinSystem {
-            modules = [ configuration ];
-            specialArgs = { inherit inputs; };
-          };
+          darwinConfigurations.rz-laptop-21 = darwin-system;
         };
 
         devShells.default = nixpkgs.mkShell {
