@@ -112,6 +112,7 @@
         # Build darwin flake using:
         # $ darwin-rebuild build --flake .#rz-laptop-21
         packages = {
+          darwinConfigurations.default = darwin-system;
           darwinConfigurations.rz-laptop-21 = darwin-system;
           darwinConfigurations.Rinat-Propeller-MBP = darwin-system;
         };
