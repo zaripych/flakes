@@ -1,6 +1,6 @@
 { pkgs ? import <nixpkgs> { } }:
 pkgs.stdenv.mkDerivation {
-  name = "docker-desktop";
+  name = "docker-desktop-dmg";
   src = pkgs.fetchurl {
     # Releases https://docs.docker.com/desktop/release-notes/
     url = "https://desktop.docker.com/mac/main/arm64/178610/Docker.dmg";
