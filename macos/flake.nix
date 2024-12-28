@@ -26,6 +26,10 @@
           ];
         };
 
+        username = "rz";
+
+        docker-desktop-dmg = nixpkgs.callPackage ./docker-desktop-dmg/default.nix { };
+
         global-npm-packages = nixpkgs.callPackage ./global-npm-packages { };
 
         configuration = { pkgs, ... }: {
@@ -34,12 +38,14 @@
           environment.systemPackages = with pkgs; [
             nil
             nixpkgs-fmt
+            nix-search-cli
             git
             git-lfs
             jq
             fzf
             nodejs
             nodePackages.pnpm
+            docker-desktop-dmg
             # Add global npm packages to ./global-npm-packages/package.json
             # and run `pnpm install` to update the lock file, after which
             # you can run `darwin-refresh` to make them globally available
@@ -84,17 +90,20 @@
               shellInit = ''
                 # A shortcut to refresh the nix-darwin configuration
                 function darwin-refresh() {
-                  darwin-rebuild switch --flake ~/Projects/flakes/macos
+                  darwin-rebuild switch --flake ~/Projects/flakes/macos --print-build-logs $@
                 }
               '';
             };
           };
+
+          security.pam.enableSudoTouchIdAuth = true;
         };
 
         darwin-system = nix-darwin.lib.darwinSystem {
-          modules = [ configuration ];
+          modules = [ configuration ./modules/dmg-apps.nix ];
           specialArgs = {
             inherit inputs;
+            inherit username;
             pkgs = nixpkgs;
           };
         };
