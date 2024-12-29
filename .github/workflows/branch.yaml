@@ -46,6 +46,6 @@ jobs:
         run: |
           sudo mv /etc/nix/nix.conf /etc/nix/nix.conf.before-nix-darwin
 
-          nix --extra-experimental-features nix-command flakes \
+          nix --extra-experimental-features 'nix-command flakes' \
             develop ./macos --command darwin-rebuild \
             switch --flake ./macos#default
