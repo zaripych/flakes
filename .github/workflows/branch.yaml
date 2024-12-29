@@ -17,9 +17,9 @@ jobs:
 
       - name: Install Nix
         uses: cachix/install-nix-action@v30
-        with:
-          extra_nix_config: |
-            access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
+        # with:
+        #   extra_nix_config: |
+        #     access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
 
       - name: Check Nix Flake
         run: nix develop ./macos --command darwin-rebuild check --flake ./macos#default
