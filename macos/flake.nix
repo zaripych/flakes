@@ -30,12 +30,19 @@
 
         docker-desktop-dmg = nixpkgs.callPackage ./docker-desktop-dmg/default.nix { };
 
-        global-npm-packages = nixpkgs.callPackage ./global-npm-packages { };
+        global-npm-packages = nixpkgs.callPackage ./global-npm-packages
+          {
+            # Add global npm packages to ./npm-packages/package.json
+            # and run `pnpm install` to update the lock file, after which
+            # you can run `darwin-refresh` to make them globally available
+            pnpm-packages-src = ./npm-packages;
+            # Hash of the fetched dependencies, omit it to calculate the
+            # hash and then update the value
+            pnpm-packages-deps-hash = "sha256-b4DyUQFNJiIUUUQRzMo3KUdFPoAt39n1aEG457GlCJM=";
+          };
 
-        configuration = { pkgs, ... }: {
-          # List packages installed in system profile. To search by name, run:
-          # $ nix-env -qaP | grep wget
-          environment.systemPackages = with pkgs; [
+        systemPackages = pkgs: with pkgs;
+          [
             nil
             nixpkgs-fmt
             nix-search-cli
@@ -46,11 +53,13 @@
             nodejs
             nodePackages.pnpm
             docker-desktop-dmg
-            # Add global npm packages to ./global-npm-packages/package.json
-            # and run `pnpm install` to update the lock file, after which
-            # you can run `darwin-refresh` to make them globally available
             global-npm-packages
           ];
+
+        configuration = { pkgs, ... }: {
+          # List packages installed in system profile. To search by name, run:
+          # $ nix-env -qaP | grep wget
+          environment.systemPackages = systemPackages pkgs;
 
           # Auto upgrade nix package and the daemon service.
           services.nix-daemon.enable = true;
@@ -110,7 +119,7 @@
       in
       {
         # Build darwin flake using:
-        # $ darwin-rebuild build --flake .#rz-laptop-21
+        # $ darwin-rebuild build --flake .#default
         packages = {
           darwinConfigurations.default = darwin-system;
           darwinConfigurations.rz-laptop-21 = darwin-system;

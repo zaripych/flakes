@@ -2,6 +2,8 @@
 , lib
 , nodejs
 , pnpm
+, pnpm-packages-src
+, pnpm-packages-deps-hash ? ""
 }:
 let
   fs = lib.fileset;
@@ -11,14 +13,7 @@ stdenv.mkDerivation (finalAttrs: {
   pname = "global-npm-packages";
   version = "0.0.0";
 
-  src = fs.toSource {
-    root = ./.;
-    fileset = fs.difference ./.
-      (fs.unions [
-        (fs.maybeMissing ./result)
-        (fs.maybeMissing ./node_modules)
-      ]);
-  };
+  src = pnpm-packages-src;
 
   nativeBuildInputs = [
     nodejs
@@ -27,6 +22,7 @@ stdenv.mkDerivation (finalAttrs: {
 
   buildPhase = ''
     runHook preBuild
+    echo $pnpmDeps
     # Optionally run a build script here
     runHook postBuild
   '';
@@ -56,7 +52,6 @@ stdenv.mkDerivation (finalAttrs: {
 
   pnpmDeps = pnpm.fetchDeps {
     inherit (finalAttrs) pname version src;
-    # Update this hash when the lock file changes
-    hash = "sha256-FiZUHXIPLmAo1/W5q+XoLD1yiLwXPPeKylJ0VAEsMY4=";
+    hash = pnpm-packages-deps-hash;
   };
 })
