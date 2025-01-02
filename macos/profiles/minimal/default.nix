@@ -44,6 +44,12 @@ let
     ../../modules/synced-apps.nix
   ];
 
+  oh-my-zsh-plugins = [
+    "git"
+    "zsh-autosuggestions"
+    "zsh-syntax-highlighting"
+  ];
+
 in
 {
   inherit nixpkgs;

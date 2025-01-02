@@ -62,6 +62,12 @@ let
     ../../modules/synced-apps.nix
   ];
 
+  oh-my-zsh-plugins = [
+    "git"
+    "zsh-autosuggestions"
+    "zsh-syntax-highlighting"
+  ];
+
 in
 {
   inherit nixpkgs;
@@ -69,6 +75,8 @@ in
   inherit system-packages;
   inherit synced-apps;
   inherit mas-apps;
+
+  inherit oh-my-zsh-plugins;
 
   inherit modules;
 }

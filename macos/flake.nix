@@ -71,6 +71,12 @@
 
                 enableFastSyntaxHighlighting = false;
 
+                ohMyZsh = {
+                  enable = builtins.length profile.oh-my-zsh-plugins > 0;
+                  plugins = profile.oh-my-zsh-plugins;
+                  theme = "agnoster";
+                };
+
                 shellInit = ''
                   # A shortcut to refresh the nix-darwin configuration
                   function darwin-refresh() {
@@ -93,6 +99,7 @@
             nix-darwin.lib.darwinSystem {
               modules = [
                 configuration
+                ./modules/oh-my-zsh.nix
               ] ++ profile.modules;
               specialArgs = {
                 inherit inputs;
