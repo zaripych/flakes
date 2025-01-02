@@ -13,4 +13,4 @@ if [ ! -d ~/Projects/flakes ]; then
   gh repo clone zaripych/flakes ~/Projects/flakes
 fi
 
-nix develop ~/Projects/flakes/macos --command darwin-rebuild switch --flake ~/Projects/flakes/macos#default
+nix --extra-experimental-features "nix-command flakes" develop ~/Projects/flakes/macos --command darwin-rebuild switch --flake ~/Projects/flakes/macos#default
