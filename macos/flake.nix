@@ -22,69 +22,22 @@
     flake-utils.lib.eachDefaultSystemPassThrough
       (system:
         let
-          nixpkgs = import inputs.nixpkgs {
-            inherit system;
-
-            config = {
-              allowUnfree = true;
-            };
-
-            overlays = [
-              (final: prev: {
-                nodejs = prev.nodejs_20;
-              })
-            ];
-          };
-
           username = "rz";
 
-          global-npm-packages = nixpkgs.callPackage ./global-npm-packages
-            {
-              # Add global npm packages to ./npm-packages/package.json
-              # and run `pnpm install` to update the lock file, after which
-              # you can run `darwin-refresh` to make them globally available
-              pnpm-packages-src = ./npm-packages;
-              # Hash of the fetched dependencies, omit it to calculate the
-              # hash and then update the value
-              pnpm-packages-deps-hash = "sha256-b4DyUQFNJiIUUUQRzMo3KUdFPoAt39n1aEG457GlCJM=";
+          profiles = {
+            default = import ./profiles/default/default.nix {
+              inherit inputs system username;
             };
+            minimal = import ./profiles/minimal/default.nix {
+              inherit inputs system username;
+            };
+          };
 
-          systemPackages = pkgs:
-            let
-              docker-desktop =
-                pkgs.callPackage ./packages/docker-desktop/default.nix { };
-              arc-browser =
-                pkgs.callPackage ./packages/arc-browser/default.nix { };
-            in
-            with pkgs; [
-              nil
-              nixpkgs-fmt
-              nix-search-cli
-              git
-              git-lfs
-              jq
-              fzf
-              nodejs
-              nodePackages.pnpm
-              global-npm-packages
-
-              docker-desktop
-              arc-browser
-            ];
-          syncedApps = pkgs:
-            let
-              _1password-gui =
-                pkgs.callPackage ./packages/1password-gui/default.nix { };
-            in
-            [
-              _1password-gui
-            ];
-
-          configuration = { pkgs, ... }: {
+          configuration = { pkgs, profile, ... }: {
             # List packages installed in system profile. To search by name, run:
             # $ nix-env -qaP | grep wget
-            environment.systemPackages = systemPackages pkgs;
-            environment.syncedApps = syncedApps pkgs;
+            environment.systemPackages = profile.system-packages;
+            environment.syncedApps = profile.synced-apps;
 
             # Auto upgrade nix package and the daemon service.
             services.nix-daemon.enable = true;
@@ -128,38 +81,43 @@
             };
 
             homebrew = {
-              enable = true;
+              enable = builtins.length (builtins.attrNames profile.mas-apps) > 0;
 
-              masApps = {
-                "Amphetamine" = 937984704;
-                "Moom Classic" = 419330170;
-              };
+              masApps = profile.mas-apps;
             };
 
             security.pam.enableSudoTouchIdAuth = true;
           };
 
-          darwin-system = nix-darwin.lib.darwinSystem {
-            modules = [
-              configuration
-              mac-app-utils.darwinModules.default
-              ./modules/synced-apps.nix
-            ];
-            specialArgs = {
-              inherit inputs;
-              inherit username;
-              pkgs = nixpkgs;
+          create-system-using-profile = { profile }:
+            nix-darwin.lib.darwinSystem {
+              modules = [
+                configuration
+              ] ++ profile.modules;
+              specialArgs = {
+                inherit inputs;
+                inherit username;
+                profile = profile;
+                pkgs = profile.nixpkgs;
+              };
             };
+
+          darwin-system = create-system-using-profile {
+            profile = profiles.default;
+          };
+          darwin-system-minimal = create-system-using-profile {
+            profile = profiles.minimal;
           };
         in
         {
           # Build darwin flake using:
           # $ darwin-rebuild build --flake ./macos#default
           darwinConfigurations.default = darwin-system;
+          darwinConfigurations.minimal = darwin-system-minimal;
           darwinConfigurations.rz-laptop-21 = darwin-system;
           darwinConfigurations.Rinat-Propeller-MBP = darwin-system;
 
-          devShells.${system}.default = nixpkgs.mkShell {
+          devShells.${system}.default = profiles.default.nixpkgs.mkShell {
             packages = with nix-darwin.packages."${system}"; [
               darwin-rebuild
               darwin-version
