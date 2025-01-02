@@ -54,6 +54,7 @@ let
   mas-apps = {
     "Amphetamine" = 937984704;
     "Moom Classic" = 419330170;
+    "Slack" = 803453959;
   };
 
   modules = [
