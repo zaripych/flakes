@@ -92,6 +92,10 @@
               masApps = profile.mas-apps;
             };
 
+            fonts = {
+              packages = profile.fonts;
+            };
+
             security.pam.enableSudoTouchIdAuth = true;
           };
 

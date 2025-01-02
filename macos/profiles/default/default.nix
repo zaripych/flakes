@@ -64,8 +64,10 @@ let
 
   oh-my-zsh-plugins = [
     "git"
-    "zsh-autosuggestions"
-    "zsh-syntax-highlighting"
+  ];
+
+  fonts = with nixpkgs; [
+    powerline-fonts
   ];
 
 in
@@ -77,6 +79,7 @@ in
   inherit mas-apps;
 
   inherit oh-my-zsh-plugins;
+  inherit fonts;
 
   inherit modules;
 }

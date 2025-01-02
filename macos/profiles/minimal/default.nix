@@ -46,8 +46,6 @@ let
 
   oh-my-zsh-plugins = [
     "git"
-    "zsh-autosuggestions"
-    "zsh-syntax-highlighting"
   ];
 
 in
@@ -57,6 +55,8 @@ in
   inherit system-packages;
   inherit synced-apps;
   inherit mas-apps;
+
+  inherit oh-my-zsh-plugins;
 
   inherit modules;
 }
