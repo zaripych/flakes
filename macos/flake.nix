@@ -46,13 +46,22 @@
             # Necessary for using flakes on this system.
             nix.settings.experimental-features = "nix-command flakes";
 
-            # Set Git commit hash for darwin-version.
-            system.configurationRevision = self.rev or self.dirtyRev or null;
-            system.defaults.NSGlobalDomain."com.apple.trackpad.scaling" = 3.0;
 
-            # Used for backwards compatibility, please read the changelog before changing.
-            # $ darwin-rebuild changelog
-            system.stateVersion = 5;
+            system = {
+              # Used for backwards compatibility, please read the changelog before changing.
+              # $ darwin-rebuild changelog
+              stateVersion = 5;
+              # Set Git commit hash for darwin-version.
+              configurationRevision = self.rev or self.dirtyRev or null;
+
+              defaults = {
+                # Restart for changes to take an effect.
+                NSGlobalDomain."com.apple.trackpad.scaling" = 3.0;
+
+                trackpad.Clicking = true;
+                trackpad.TrackpadThreeFingerDrag = true;
+              };
+            };
 
             # The platform the configuration will be used on.
             nixpkgs.hostPlatform = system;
