@@ -43,6 +43,7 @@ let
     global-npm-packages
     _1password-cli
 
+    iterm2
     all-packages.docker-desktop
     all-packages.arc-browser
   ];
