@@ -60,6 +60,9 @@
 
                 trackpad.Clicking = true;
                 trackpad.TrackpadThreeFingerDrag = true;
+
+                keyboard.KeyRepeat = 2;
+                keyboard.InitialKeyRepeat = 15;
               };
             };
 
