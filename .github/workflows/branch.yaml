@@ -42,10 +42,10 @@ jobs:
       - name: Build Nix Flake
         run: nix develop ./macos --command darwin-rebuild build --flake ./macos#default
 
-      - name: Switch to Nix Flake
-        run: |
-          sudo mv /etc/nix/nix.conf /etc/nix/nix.conf.before-nix-darwin
+      # - name: Switch to Nix Flake
+      #   run: |
+      #     sudo mv /etc/nix/nix.conf /etc/nix/nix.conf.before-nix-darwin
 
-          nix --extra-experimental-features 'nix-command flakes' \
-            develop ./macos --command darwin-rebuild \
-            switch --flake ./macos#default
+      #     nix --extra-experimental-features 'nix-command flakes' \
+      #       develop ./macos --command darwin-rebuild \
+      #       switch --flake ./macos#default

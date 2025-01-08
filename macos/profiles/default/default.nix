@@ -61,6 +61,7 @@ let
   modules = [
     inputs.mac-app-utils.darwinModules.default
     ../../modules/synced-apps.nix
+    ../../modules/oh-my-zsh.nix
   ];
 
   oh-my-zsh-plugins = [
