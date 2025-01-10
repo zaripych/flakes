@@ -17,8 +17,6 @@ let
     ];
   };
 
-  all-packages = import ../../packages/all-packages.nix { inherit nixpkgs; };
-
   system-packages = with nixpkgs; [
     nil
     nixpkgs-fmt
@@ -29,12 +27,10 @@ let
     fzf
     nodejs
     nodePackages.pnpm
-
     _1password-cli
   ];
 
   synced-apps = [
-    all-packages._1password-gui
   ];
 
   mas-apps = { };
@@ -42,10 +38,14 @@ let
   modules = [
     inputs.mac-app-utils.darwinModules.default
     ../../modules/synced-apps.nix
+    ../../modules/oh-my-zsh.nix
   ];
 
   oh-my-zsh-plugins = [
     "git"
+  ];
+
+  fonts = [
   ];
 
 in
@@ -57,6 +57,7 @@ in
   inherit mas-apps;
 
   inherit oh-my-zsh-plugins;
+  inherit fonts;
 
   inherit modules;
 }

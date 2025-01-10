@@ -1,0 +1,193 @@
+// Place your key bindings in this file to override the defaults
+[
+  // Trigger vspacecode in empty editor group
+  {
+    "command": "vspacecode.space",
+    "key": "space",
+    "when": "activeEditorGroupEmpty && focusedView == '' && !whichkeyActive && !inputFocus"
+  },
+  // Trigger vspacecode when sidebar is in focus
+  {
+    "command": "vspacecode.space",
+    "key": "space",
+    "when": "sideBarFocus && !inputFocus && !whichkeyActive"
+  },
+  {
+    "command": "vspacecode.space",
+    "key": "alt+space",
+    "when": "!editorFocus && !whichkeyActive"
+  },
+  // Keybindings required for edamagit
+  // https://github.com/kahole/edamagit#vim-support-vscodevim
+  // Cannot be added to package.json because keybinding replacements
+  {
+    "command": "extension.vim_tab",
+    "key": "tab",
+    "when": "editorFocus && vim.active && !inDebugRepl && vim.mode != 'Insert' && editorLangId != 'magit'"
+  },
+  {
+    "command": "-extension.vim_tab",
+    "key": "tab"
+  },
+  {
+    "command": "magit.discard-at-point",
+    "key": "x",
+    "when": "editorTextFocus && editorLangId == 'magit' && vim.mode =~ /^(?!SearchInProgressMode|CommandlineInProgress).*$/"
+  },
+  {
+    "command": "-magit.discard-at-point",
+    "key": "k"
+  },
+  {
+    "command": "magit.reverse-at-point",
+    "key": "-",
+    "when": "editorTextFocus && editorLangId == 'magit' && vim.mode =~ /^(?!SearchInProgressMode|CommandlineInProgress).*$/"
+  },
+  {
+    "command": "-magit.reverse-at-point",
+    "key": "v"
+  },
+  {
+    "command": "magit.reverting",
+    "key": "shift+-",
+    "when": "editorTextFocus && editorLangId == 'magit' && vim.mode =~ /^(?!SearchInProgressMode|CommandlineInProgress).*$/"
+  },
+  {
+    "command": "-magit.reverting",
+    "key": "shift+v"
+  },
+  {
+    "command": "magit.resetting",
+    "key": "shift+o",
+    "when": "editorTextFocus && editorLangId == 'magit' && vim.mode =~ /^(?!SearchInProgressMode|CommandlineInProgress).*$/"
+  },
+  {
+    "command": "-magit.resetting",
+    "key": "shift+x"
+  },
+  {
+    "command": "-magit.reset-mixed",
+    "key": "x"
+  },
+  {
+    "command": "-magit.reset-hard",
+    "key": "ctrl+u x"
+  },
+  // Extra ref menu support for edamagit with the key "y"
+  // Cannot be added to package.json because keybinding replacements
+  {
+    "command": "-magit.show-refs",
+    "key": "y"
+  },
+  {
+    "command": "vspacecode.showMagitRefMenu",
+    "key": "y",
+    "when": "editorTextFocus && editorLangId == 'magit' && vim.mode == 'Normal'"
+  },
+  // Easy navigation in quick open/QuickPick
+  {
+    "command": "workbench.action.quickOpenSelectNext",
+    "key": "ctrl+j",
+    "when": "inQuickOpen"
+  },
+  {
+    "command": "workbench.action.quickOpenSelectPrevious",
+    "key": "ctrl+k",
+    "when": "inQuickOpen"
+  },
+  // Easy navigation in suggestion/intellisense
+  // Cannot be added to package.json because of conflict with vim's default bindings
+  {
+    "command": "selectNextSuggestion",
+    "key": "ctrl+j",
+    "when": "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus"
+  },
+  {
+    "command": "selectPrevSuggestion",
+    "key": "ctrl+k",
+    "when": "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus"
+  },
+  {
+    "command": "acceptSelectedSuggestion",
+    "key": "ctrl+l",
+    "when": "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus"
+  },
+  // Easy navigation in parameter hint (i.e. traverse the hints when there's multiple overload for one method)
+  // Cannot be added to package.json because of conflict with vim's default bindings
+  {
+    "command": "showNextParameterHint",
+    "key": "ctrl+j",
+    "when": "editorFocus && parameterHintsMultipleSignatures && parameterHintsVisible"
+  },
+  {
+    "command": "showPrevParameterHint",
+    "key": "ctrl+k",
+    "when": "editorFocus && parameterHintsMultipleSignatures && parameterHintsVisible"
+  },
+  // Add ctrl+h/l to navigate in file browser
+  {
+    "command": "file-browser.stepOut",
+    "key": "ctrl+h",
+    "when": "inFileBrowser"
+  },
+  {
+    "command": "file-browser.stepIn",
+    "key": "ctrl+l",
+    "when": "inFileBrowser"
+  },
+  {
+    "command": "extension.vim_cmd+d",
+    "key": "alt+d",
+    "when": "editorTextFocus && vim.active && vim.use<D-d> && !inDebugRepl"
+  },
+  {
+    "command": "-extension.vim_cmd+d",
+    "key": "cmd+d",
+    "when": "editorTextFocus && vim.active && vim.use<D-d> && !inDebugRepl"
+  },
+  {
+    "command": "workbench.action.togglePanel",
+    "key": "shift+cmd+j",
+    "when": "terminalFocus || panelVisible"
+  },
+  {
+    "args": {
+      "commands": [
+        "workbench.action.toggleMaximizedPanel",
+        "workbench.action.terminal.focus",
+        "workbench.action.terminal.scrollToBottom"
+      ]
+    },
+    "command": "runCommands",
+    "key": "shift+cmd+j",
+    "when": "!terminalFocus && !panelVisible"
+  },
+  {
+    "command": "workbench.action.switchWindow",
+    "key": "ctrl+w"
+  },
+  {
+    "command": "copy-breadcrumbs.copy",
+    "key": "ctrl+cmd+c"
+  },
+  {
+    "command": "cursorUp",
+    "key": "up",
+    "when": "editorTextFocus && vim.active && !inDebugRepl && !suggestWidgetMultipleSuggestions && !suggestWidgetVisible && (vim.mode == 'Normal' || vim.mode == 'Insert')"
+  },
+  {
+    "command": "cursorDown",
+    "key": "down",
+    "when": "editorTextFocus && vim.active && !inDebugRepl && !suggestWidgetMultipleSuggestions && !suggestWidgetVisible && (vim.mode == 'Normal' || vim.mode == 'Insert')"
+  },
+  {
+    "command": "cursorUp",
+    "key": "k",
+    "when": "editorTextFocus && vim.active && !inDebugRepl && vim.mode == 'Normal' && !suggestWidgetMultipleSuggestions && !suggestWidgetVisible"
+  },
+  {
+    "command": "cursorDown",
+    "key": "j",
+    "when": "editorTextFocus && vim.active && !inDebugRepl && vim.mode == 'Normal' && !suggestWidgetMultipleSuggestions && !suggestWidgetVisible"
+  }
+]

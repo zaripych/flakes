@@ -10,8 +10,8 @@ on:
 
 jobs:
   build-macos:
+    timeout-minutes: 15
     runs-on: macos-latest
-
     steps:
       - uses: actions/checkout@v4
 
@@ -36,16 +36,22 @@ jobs:
           # except the version with the `primary-key`, if it exists
           purge-primary-key: never
 
-      - name: Check Nix Flake
+      - name: Check Minimal Nix Flake
+        run: nix develop ./macos --command darwin-rebuild check --flake ./macos#minimal
+
+      - name: Build Minimal Nix Flake
+        run: nix develop ./macos --command darwin-rebuild build --flake ./macos#minimal
+
+      - name: Check Default Nix Flake
         run: nix develop ./macos --command darwin-rebuild check --flake ./macos#default
 
-      - name: Build Nix Flake
+      - name: Build Default Nix Flake
         run: nix develop ./macos --command darwin-rebuild build --flake ./macos#default
 
-      # - name: Switch to Nix Flake
-      #   run: |
-      #     sudo mv /etc/nix/nix.conf /etc/nix/nix.conf.before-nix-darwin
+      - name: Switch to Nix Flake
+        run: |
+          sudo mv /etc/nix/nix.conf /etc/nix/nix.conf.before-nix-darwin
 
-      #     nix --extra-experimental-features 'nix-command flakes' \
-      #       develop ./macos --command darwin-rebuild \
-      #       switch --flake ./macos#default
+          nix --extra-experimental-features 'nix-command flakes' \
+            develop ./macos --command darwin-rebuild \
+            switch --flake ./macos#minimal

@@ -1,0 +1,142 @@
+{
+  "[dockerfile]": {
+    "editor.defaultFormatter": "ms-azuretools.vscode-docker"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[markdown]": {
+    "editor.wordWrap": "wordWrapColumn"
+  },
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "editor.formatOnType": true
+  },
+  "[shellscript]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "copy-breadcrumbs.pasteToTerminal": false,
+  "diffEditor.ignoreTrimWhitespace": false,
+  "diffEditor.renderSideBySide": true,
+  "editor.accessibilitySupport": "off",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "editor.formatOnSave": true,
+  "editor.gotoLocation.alternativeDeclarationCommand": "editor.action.goToTypeDefinition",
+  "editor.gotoLocation.multipleDeclarations": "goto",
+  "editor.gotoLocation.multipleDefinitions": "goto",
+  "editor.gotoLocation.multipleImplementations": "goto",
+  "editor.gotoLocation.multipleReferences": "goto",
+  "editor.gotoLocation.multipleTypeDefinitions": "goto",
+  "editor.guides.bracketPairs": true,
+  "editor.inlineSuggest.enabled": true,
+  "editor.stickyScroll.enabled": true,
+  "editor.tokenColorCustomizations": {
+    // "[Community Material Theme Darker High Contrast]": {
+    //   "comments": "#2299778d"
+    // }
+  },
+  "explorer.fileNesting.enabled": true,
+  "github.copilot.editor.enableAutoCompletions": true,
+  "github.copilot.enable": {
+    "*": true,
+    "markdown": true,
+    "plaintext": true,
+    "scminput": false,
+    "yaml": true
+  },
+  "githubPullRequests.pullBranch": "never",
+  "gitlens.codeLens.enabled": false,
+  "javascript.preferences.importModuleSpecifier": "relative",
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "magit.display-buffer-function": "same-column",
+  "nix.enableLanguageServer": true,
+  "nix.formatterPath": "nixpkgs-fmt",
+  "nix.serverSettings": {
+    "nil": {
+      "diagnostics": {
+        "ignored": []
+      },
+      "formatting": {
+        "command": ["nixpkgs-fmt"]
+      }
+    }
+  },
+  "python.terminal.activateEnvInCurrentTerminal": true,
+  "python.terminal.activateEnvironment": false,
+  "remote.autoForwardPortsSource": "hybrid",
+  "security.workspace.trust.untrustedFiles": "open",
+  "terminal.integrated.scrollback": 20000,
+  "typescript.preferences.importModuleSpecifier": "relative",
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  // Vim easymotion is required for Jump menu - <SPC> j
+  "vim.easymotion": true,
+  // Trigger the main which key menu with in the active editor with vim
+  // This cannot be put into keybindings.json because it will
+  // create conflict with Vim.
+  // https://github.com/stevenguh/spacecode/issues/3
+  "vim.normalModeKeyBindingsNonRecursive": [
+    {
+      "before": ["u"],
+      "commands": []
+    },
+    {
+      "before": ["<space>"],
+      "commands": ["vspacecode.space"]
+    },
+    {
+      "before": [","],
+      "commands": [
+        "vspacecode.space",
+        {
+          "args": "m",
+          "command": "whichkey.triggerKey"
+        }
+      ]
+    }
+  ],
+  // Use system clipboard for vim
+  "vim.useSystemClipboard": true,
+  "vim.visualModeKeyBindingsNonRecursive": [
+    {
+      "before": ["<space>"],
+      "commands": ["vspacecode.space"]
+    },
+    {
+      "before": [","],
+      "commands": [
+        "vspacecode.space",
+        {
+          "args": "m",
+          "command": "whichkey.triggerKey"
+        }
+      ]
+    }
+  ],
+  "workbench.colorCustomizations": {
+    "terminal.findMatchBorder": "#ffffff",
+    "terminal.findMatchHighlightBorder": "#ffffff",
+    "terminal.selectionForeground": "#ffcf60"
+  },
+  "workbench.colorTheme": "One Dark Pro",
+  "workbench.editor.revealIfOpen": false,
+  "workbench.editorAssociations": {
+    "*.copilotmd": "vscode.markdown.preview.editor",
+    "*.png": "editor.excalidraw"
+  },
+  "workbench.iconTheme": "material-icon-theme",
+  "zenMode.hideLineNumbers": false
+}

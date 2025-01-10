@@ -19,6 +19,10 @@
     mac-app-utils.inputs.nixpkgs.follows = "nixpkgs";
     mac-app-utils.inputs.flake-utils.follows = "flake-utils";
     mac-app-utils.inputs.systems.follows = "systems";
+
+    nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
+    nix-vscode-extensions.inputs.nixpkgs.follows = "nixpkgs";
+    nix-vscode-extensions.inputs.flake-utils.follows = "flake-utils";
   };
 
   outputs =
@@ -125,24 +129,35 @@
           nix-darwin.lib.darwinSystem {
             modules = [
               configuration
-              home-manager.darwinModules.home-manager
-              {
-                users.users.${username}.home = "/Users/${username}";
+            ]
+            # Add home manager, if it is enabled in the profile
+            ++ (
+              if (builtins.length (builtins.attrNames (profile.home-manager or { })) > 0)
+              then
+                [
+                  home-manager.darwinModules.home-manager
+                  {
+                    users.users.${username}.home = "/Users/${username}";
 
-                home-manager.useGlobalPkgs = true;
-                home-manager.useUserPackages = true;
-                home-manager.users.${username} = profile.home or ({ config, pkgs, ... }: {
-                  home.username = username;
+                    home-manager.useGlobalPkgs = true;
+                    home-manager.useUserPackages = true;
 
-                  home.stateVersion = "25.05";
+                    home-manager.sharedModules = [
+                      mac-app-utils.homeManagerModules.default
+                    ];
 
-                  programs.home-manager.enable = true;
-                });
+                    home-manager.users.${username} = profile.home-manager.home;
 
-                # Optionally, use home-manager.extraSpecialArgs to pass
-                # arguments to home.nix
-              }
-            ] ++ profile.modules;
+                    home-manager.extraSpecialArgs = {
+                      inherit inputs;
+                      inherit username;
+                    };
+                  }
+                ] else [ ]
+            )
+            # Add other modules from the profile
+            ++ profile.modules;
+
             specialArgs = {
               inherit inputs;
               inherit username;
@@ -152,7 +167,7 @@
           };
 
         darwin-system = create-system-using-profile {
-          profile = profiles.default;
+          profile = profiles.minimal // profiles.default;
         };
         darwin-system-minimal = create-system-using-profile {
           profile = profiles.minimal;
