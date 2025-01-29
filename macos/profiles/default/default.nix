@@ -46,6 +46,7 @@ let
     iterm2
     all-packages.docker-desktop
     all-packages.arc-browser
+    haskellPackages.patat
   ];
 
   synced-apps = [
@@ -122,6 +123,8 @@ let
             vscode-extensions.wallabyjs.wallaby-vscode
 
             vscode-extensions.github.copilot
+            vscode-extensions.github.copilot-chat
+            vscode-extensions.github.vscode-github-actions
 
             vscode-extensions.zhuangtongfa.material-theme # One Dark Pro
             vscode-extensions.pkief.material-icon-theme

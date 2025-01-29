@@ -100,7 +100,7 @@
               ohMyZsh = {
                 enable = builtins.length profile.oh-my-zsh-plugins > 0;
                 plugins = profile.oh-my-zsh-plugins;
-                theme = "agnoster";
+                theme = "fino";
               };
 
               shellInit = ''
