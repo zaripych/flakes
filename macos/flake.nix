@@ -1,11 +1,14 @@
 {
-  description = "A very basic flake";
+  description = "A nix-darwin configuration flake for my personal laptops";
 
   inputs = {
     systems.url = "github:nix-systems/aarch64-darwin";
 
     flake-utils.url = "github:numtide/flake-utils";
     flake-utils.inputs.systems.follows = "systems";
+
+    flake-utils-plus.url = "github:gytis-ivaskevicius/flake-utils-plus";
+    flake-utils-plus.inputs.flake-utils.follows = "flake-utils";
 
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
 
@@ -27,166 +30,81 @@
 
   outputs =
     inputs@{ self
-    , flake-utils
+    , flake-utils-plus
     , nix-darwin
-    , mac-app-utils
-    , home-manager
     , ...
     }:
-    flake-utils.lib.eachDefaultSystemPassThrough
-      (system:
-      let
-        username = "rz";
+    let
 
-        profiles = {
-          default = import ./profiles/default/default.nix {
-            inherit inputs system username;
-          };
-          minimal = import ./profiles/minimal/default.nix {
-            inherit inputs system username;
-          };
-        };
+      mkHostConfig = { modules, inputPatchingModules }: {
+        system = "aarch64-darwin";
+        output = "darwinConfigurations";
+        builder = nix-darwin.lib.darwinSystem;
 
-        configuration = { pkgs, profile, ... }: {
-          # List packages installed in system profile. To search by name, run:
-          # $ nix-env -qaP | grep wget
-          environment.systemPackages = profile.system-packages;
-          environment.syncedApps = profile.synced-apps;
-
-          # Auto upgrade nix package and the daemon service.
-          services.nix-daemon.enable = true;
-          nix.package = pkgs.nix;
-
-          # Necessary for using flakes on this system.
-          nix.settings.experimental-features = "nix-command flakes";
-
-
-          system = {
-            # Used for backwards compatibility, please read the changelog before changing.
-            # $ darwin-rebuild changelog
-            stateVersion = 5;
-            # Set Git commit hash for darwin-version.
-            configurationRevision = self.rev or self.dirtyRev or null;
-
-            defaults = {
-              # Restart for changes to take an effect.
-              NSGlobalDomain."com.apple.trackpad.scaling" = 3.0;
-              NSGlobalDomain.KeyRepeat = 2;
-              NSGlobalDomain.InitialKeyRepeat = 15;
-
-              trackpad.Clicking = true;
-              trackpad.TrackpadThreeFingerDrag = true;
+        modules = [
+          ({ inputs
+           , ...
+           }: {
+            system = {
+              # Used for backwards compatibility, please read the changelog before changing.
+              # $ darwin-rebuild changelog
+              stateVersion = 5;
+              # Set Git commit hash for darwin-version.
+              configurationRevision = inputs.nix-darwin.rev or inputs.nix-darwin.dirtyRev or null;
             };
-          };
+          })
+        ] ++ modules;
 
-          # The platform the configuration will be used on.
-          nixpkgs.hostPlatform = system;
-
-          programs = {
-            direnv = {
-              enable = true;
+        specialArgs =
+          let
+            args = {
+              nixpkgsModulesPath = toString (inputs.nixpkgs + "/nixos/modules");
+              inherit (import ./libraries/useFeatureAt.nix { }) useFeatureAt;
+              username = "rz";
             };
-
-            zsh = {
-              enable = true;
-              enableCompletion = true;
-
-              enableFzfCompletion = true;
-              enableFzfGit = true;
-              enableFzfHistory = true;
-
-              enableFastSyntaxHighlighting = false;
-
-              ohMyZsh = {
-                enable = builtins.length profile.oh-my-zsh-plugins > 0;
-                plugins = profile.oh-my-zsh-plugins;
-                theme = "fino";
-              };
-
-              shellInit = ''
-                # A shortcut to refresh the nix-darwin configuration
-                function darwin-refresh() {
-                  darwin-rebuild switch --flake ~/Projects/flakes/macos --print-build-logs $@
-                }
-              '';
-            };
-          };
-
-          homebrew = {
-            enable = builtins.length (builtins.attrNames profile.mas-apps) > 0;
-
-            masApps = profile.mas-apps;
-          };
-
-          fonts = {
-            packages = profile.fonts;
-          };
-
-          security.pam.enableSudoTouchIdAuth = true;
-        };
-
-        create-system-using-profile = { profile }:
-          nix-darwin.lib.darwinSystem {
-            modules = [
-              configuration
-            ]
-            # Add home manager, if it is enabled in the profile
-            ++ (
-              if (builtins.length (builtins.attrNames (profile.home-manager or { })) > 0)
-              then
-                [
-                  home-manager.darwinModules.home-manager
-                  {
-                    users.users.${username}.home = "/Users/${username}";
-
-                    home-manager.useGlobalPkgs = true;
-                    home-manager.useUserPackages = true;
-
-                    home-manager.sharedModules = [
-                      mac-app-utils.homeManagerModules.default
-                    ];
-
-                    home-manager.users.${username} = profile.home-manager.home;
-
-                    home-manager.extraSpecialArgs = {
-                      inherit inputs;
-                      inherit username;
-                    };
-                  }
-                ] else [ ]
-            )
-            # Add other modules from the profile
-            ++ profile.modules;
-
-            specialArgs = {
+          in
+          args // {
+            inputs = self.lib.aarch64-darwin.patchInputs {
               inherit inputs;
-              inherit username;
-              profile = profile;
-              pkgs = profile.nixpkgs;
+              inherit args;
+              modules = inputPatchingModules;
             };
           };
-
-        darwin-system = create-system-using-profile {
-          profile = profiles.minimal // profiles.default;
-        };
-        darwin-system-minimal = create-system-using-profile {
-          profile = profiles.minimal;
-        };
-      in
+      };
+    in
+    flake-utils-plus.lib.mkFlake
       {
-        # Build darwin flake using:
-        # $ darwin-rebuild build --flake ./macos#default
-        darwinConfigurations.default = darwin-system;
-        darwinConfigurations.minimal = darwin-system-minimal;
-        darwinConfigurations.rz-laptop-21 = darwin-system;
-        darwinConfigurations.Rinat-Propeller-MBP = darwin-system;
+        inherit self inputs;
 
-        devShells.${system}.default = profiles.default.nixpkgs.mkShell {
-          packages = with nix-darwin.packages."${system}"; [
-            darwin-rebuild
-            darwin-version
-          ];
+        channelsConfig = { allowUnfree = true; };
+
+        sharedOverlays = [
+          (import ./features/nodejs-version/overlay.nix)
+        ];
+
+        outputsBuilder = channels: {
+          lib = {
+            patchInputs = import ./features/patch-inputs/default.nix {
+              pkgs = channels.nixpkgs;
+            };
+          };
         };
-      }
-      );
+
+        hostDefaults = mkHostConfig
+          {
+            modules = [
+              ./profiles/minimal/module.nix
+              ./profiles/default/module.nix
+              # Should be last
+              ./features/trace-packages/module.nix
+            ];
+            inputPatchingModules = [
+              # ./features/patching-home-manager-for-vscode-profiles/module.nix
+            ];
+          };
+
+        hosts.default = { };
+        hosts.Rinat-Propeller-MBP = { };
+
+      };
 }
