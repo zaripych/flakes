@@ -10,5 +10,6 @@
     (useFeatureAt ./../../features/mouse-and-trackpad/module.nix)
 
     (useFeatureAt ./../../features/powerline-fonts/module.nix)
+    (useFeatureAt ./../../features/security/module.nix)
   ];
 }

@@ -14,4 +14,8 @@
       "Slack" = 803453959;
     };
   };
+
+  environment.systemPath = [
+    "/opt/homebrew/bin"
+  ];
 }

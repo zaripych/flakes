@@ -7,13 +7,15 @@
 ,
 }:
 let
-  result = pkgs.lib.evalModules {
-    modules = modules;
-    specialArgs = args // {
-      inherit pkgs;
-      inherit inputs;
-    };
-  };
+  result =
+    if builtins.length modules > 0 then
+      (pkgs.lib.evalModules {
+        modules = modules;
+        specialArgs = args // {
+          inherit pkgs;
+          inherit inputs;
+        };
+      }) else { config = { inputs = inputs; }; };
 in
 if builtins.hasAttr "inputs" result.config
 then result.config.inputs

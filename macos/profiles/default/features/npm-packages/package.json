@@ -1,5 +1,5 @@
 {
-  "name": "global-npm-packages",
+  "name": "defaults",
   "version": "0.0.0-development",
   "dependencies": {
     "git-pr-train": "2.5.1",

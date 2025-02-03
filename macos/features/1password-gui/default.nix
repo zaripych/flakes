@@ -1,11 +1,15 @@
 { fetchurl, _1password-gui, ... }:
 
 _1password-gui.overrideAttrs (oldAttrs: rec {
-  version = "8.10.56";
+  version = "8.10.58";
   src = fetchurl {
     url = "https://downloads.1password.com/mac/1Password-${version}-aarch64.zip";
-    hash = "sha256-byu8SW/GVvKBDN02BblziRzo4QG00k7tuC5Bb5BpqtU=";
+    hash = "sha256-7SczaIcY/bQtTy6ODQh464/14q+VvgnJr7EdhEzevCs=";
   };
+
+  # Don't fixup the app, we don't want to break the code signatures
+  dontFixup = true;
+
   meta = oldAttrs.meta // {
     # Since 1Password GUI doesn't work when symlinked via nix-darwin the package
     # was considered broken, but it works fine when the app is copied to /Applications

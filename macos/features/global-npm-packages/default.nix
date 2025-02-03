@@ -2,18 +2,20 @@
 , lib
 , nodejs
 , pnpm
-, pnpm-packages-src
-, pnpm-packages-deps-hash ? ""
+, src
+, hash ? ""
 }:
 let
-  fs = lib.fileset;
+  packageJson = lib.importJSON "${src}/package.json";
+  name = packageJson.name;
+  version = packageJson.version;
 in
 stdenv.mkDerivation (finalAttrs: {
-  name = "global-npm-packages";
-  pname = "global-npm-packages";
-  version = "0.0.0";
+  name = "global-npm-packages-${name}";
+  pname = name;
+  version = version;
 
-  src = pnpm-packages-src;
+  src = src;
 
   nativeBuildInputs = [
     nodejs
@@ -52,6 +54,6 @@ stdenv.mkDerivation (finalAttrs: {
 
   pnpmDeps = pnpm.fetchDeps {
     inherit (finalAttrs) pname version src;
-    hash = pnpm-packages-deps-hash;
+    hash = hash;
   };
 })

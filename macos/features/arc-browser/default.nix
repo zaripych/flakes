@@ -3,9 +3,9 @@
 }:
 
 arc-browser.overrideAttrs (oldAttrs: rec {
-  version = "1.74.0-57065";
+  version = "1.79.1-58230";
   src = fetchurl {
     url = "https://releases.arc.net/release/Arc-${version}.dmg";
-    hash = "sha256-muTTHJOQKY/oqGJ4OXgoyOhgAo0hW6Y12Dknq/KWTMw=";
+    hash = "sha256-BYlKiDcgVviKeKI++qjTALRblI+kFNq7gm5EFmaa3sM=";
   };
 })

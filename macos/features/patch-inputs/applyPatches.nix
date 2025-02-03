@@ -3,7 +3,7 @@
 # to follow overridden lockFileEntries - a small modification was made as it seems call-flake.nix
 # was modified since posting and now requires { root = { sourceInfo = src; subdir = ""; }; } to be passed
 # as the second argument to succeed.
-{ lib }:
+{ lib, call-flake }:
 
 { pkgs
 , name
@@ -56,7 +56,7 @@ let
         narHash = lib.fileContents patched.narHash;
       };
     in
-    (import ./call-flake/call-flake.nix) lockFile ({ root = { sourceInfo = flake; subdir = ""; }; });
+    (import "${call-flake}/call-flake.nix") lockFile ({ root = { sourceInfo = flake; subdir = ""; }; });
 in
 if numOfPatches == 0
 then

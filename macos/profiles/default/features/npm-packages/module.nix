@@ -1,8 +1,4 @@
-{ pkgs
-, config
-, lib
-, inputs
-, useFeatureAt
+{ useFeatureAt
 , ...
 }: {
   imports = [
@@ -11,7 +7,11 @@
 
   globalNpmPackages = {
     enable = true;
-    packagesSrc = (../npm-packages);
-    packagesHash = "sha256-b4DyUQFNJiIUUUQRzMo3KUdFPoAt39n1aEG457GlCJM=";
+    packages = [
+      {
+        src = ../npm-packages;
+        hash = "sha256-qAC/6s58A75zFJKTv2VeWdORx+GRCt2fZL+7lA60dV4=";
+      }
+    ];
   };
 }

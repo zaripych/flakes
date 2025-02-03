@@ -1,9 +1,7 @@
-{ nixpkgs
-, config
-, lib
-, inputs
+{ pkgs
 , nixpkgsModulesPath
 , useFeatureAt
+, flakePath
 , ...
 }: {
 
@@ -13,6 +11,11 @@
     (useFeatureAt ../nixos-modules-compat/module.nix)
     # Hack out the nixos oh-my-zsh module from nixpkgs
     (nixpkgsModulesPath + "/programs/zsh/oh-my-zsh.nix")
+  ];
+
+  environment.systemPackages = [
+    # Used by colorize plugin below
+    pkgs.chroma
   ];
 
   programs = {
@@ -31,6 +34,7 @@
         enable = true;
         plugins = [
           "git"
+          "colorize"
         ];
         theme = "fino";
       };
@@ -38,7 +42,7 @@
       shellInit = ''
         # A shortcut to refresh the nix-darwin configuration
         function darwin-refresh() {
-          darwin-rebuild switch --flake ~/Projects/flakes/macos --print-build-logs $@
+          darwin-rebuild switch --flake ${flakePath} --print-build-logs $@
         }
       '';
     };

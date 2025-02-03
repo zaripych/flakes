@@ -40,6 +40,7 @@
           let
             applyPatches = (import ./applyPatches.nix {
               inherit (pkgs) lib;
+              inherit (inputs) call-flake;
             });
             patched = applyPatches {
               inherit pkgs;

@@ -1,9 +1,13 @@
-{ pkgs, ... }:
+{ pkgs, useFeatureAt, ... }:
 let
   arc-browser = pkgs.callPackage ./default.nix { };
 in
 {
-  environment.systemPackages = [
+  imports = [
+    (useFeatureAt ../synced-applications/module.nix)
+  ];
+
+  environment.syncedApps = [
     arc-browser
   ];
 }
