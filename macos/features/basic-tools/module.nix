@@ -1,21 +1,13 @@
 { pkgs
-, config
-, lib
-, inputs
 , ...
 }: {
 
   environment.systemPackages = with pkgs; [
-    git
-    git-lfs
     jq
     fzf
     nodejs
-    nodePackages.pnpm
 
     haskellPackages.patat
-
-    gh
 
     _1password-cli
   ];

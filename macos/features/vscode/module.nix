@@ -66,7 +66,7 @@ let
 in
 {
   imports = [
-    (useFeatureAt ../../../../features/home-manager/module.nix)
+    (useFeatureAt ../home-manager/module.nix)
   ];
 
   home-manager.users.${username} = {

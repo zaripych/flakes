@@ -39,12 +39,6 @@
         theme = "fino";
       };
 
-      shellInit = ''
-        # A shortcut to refresh the nix-darwin configuration
-        function darwin-refresh() {
-          darwin-rebuild switch --flake ${flakePath} --print-build-logs $@
-        }
-      '';
     };
   };
 

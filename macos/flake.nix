@@ -37,14 +37,15 @@
     , ...
     }:
     let
-      mkHostConfig =
+      makeMkHostConfig =
+        { nixpkgs, system, lib }:
         { modules
         , flakePath ? "~/Projects/flakes"
         , username ? "rz"
         , inputPatchingModules ? [ ]
         , specialArgs ? { }
         }: {
-          system = "aarch64-darwin";
+          system = system;
           output = "darwinConfigurations";
           builder = nix-darwin.lib.darwinSystem;
 
@@ -62,33 +63,24 @@
             })
           ] ++ modules;
 
-          specialArgs =
-            let
-              args = {
-                # A tool to figure out which modules have been used in the configuration
-                # this is supposed to be used every time we refer/import a module, ie
-                # imports = [ (useFeatureAt "module-name") ];
-                useFeatureAt = self.lib.aarch64-darwin.useFeatureAt;
-                # Path to nixpkgs modules, this allows us to use nixos modules in nix-darwin
-                nixpkgsModulesPath = self.lib.aarch64-darwin.nixpkgsModulesPath;
-                # Path to the collection of builtin features/modules that constitute the
-                # `default` and `minimal` profiles
-                featuresPath = ./features;
-                # Username to use for the configurations
-                username = username;
-                # Path to the checked out location of the configuration flake
-                flakePath = flakePath;
-              };
-            in
-            args // {
-              # Patch inputs of the flake using modules from `inputPatchingModules`
-              inputs = self.lib.aarch64-darwin.patchInputs {
-                inherit inputs;
-                inherit args;
-                modules = inputPatchingModules;
-              };
-            } // specialArgs;
+          specialArgs = {
+            username = username;
+            flakePath = flakePath;
+          } // lib // {
+            # Patch inputs of the flake using modules from `inputPatchingModules`
+            inputs = lib.patchInputs {
+              inherit inputs;
+              args = lib;
+              modules = inputPatchingModules;
+            };
+          } // specialArgs;
         };
+      pkgs = self.pkgs.aarch64-darwin.nixpkgs;
+      mkHostConfig = makeMkHostConfig {
+        nixpkgs = pkgs;
+        system = pkgs.system;
+        lib = self.lib.aarch64-darwin;
+      };
     in
     flake-utils-plus.lib.mkFlake
       {
@@ -101,37 +93,80 @@
         ];
 
         outputsBuilder = channels: {
-          lib = {
-            patchInputs = import ./features/patch-inputs/default.nix {
-              pkgs = channels.nixpkgs;
+          lib =
+            let
+              lib = rec {
+                patchInputs = import ./features/patch-inputs/default.nix {
+                  pkgs = channels.nixpkgs;
+                };
+                nixpkgsModulesPath = toString (inputs.nixpkgs + "/nixos/modules");
+                featuresPath = ./features;
+                useFeatureAt = import ./libraries/useFeatureAt.nix { };
+
+                # These could be used by the host configurations to disable/enable features
+                features = {
+                  _1password-gui = useFeatureAt ./features/1password-gui/module.nix;
+                  arc-browser = useFeatureAt ./features/arc-browser/module.nix;
+                  darwin-refresh = useFeatureAt ./features/darwin-refresh/module.nix;
+                  direnv = useFeatureAt ./features/direnv/module.nix;
+                  docker-desktop = useFeatureAt ./features/docker-desktop/module.nix;
+                  enable-sudo-touch = useFeatureAt ./features/enable-sudo-touch/module.nix;
+                  fix-app-symlinks = useFeatureAt ./features/fix-app-symlinks/module.nix;
+                  git-config = useFeatureAt ./features/git-config/module.nix;
+                  global-npm-packages = useFeatureAt ./features/global-npm-packages/module.nix;
+                  home-manager = useFeatureAt ./features/home-manager/module.nix;
+                  mouse-and-trackpad = useFeatureAt ./features/mouse-and-trackpad/module.nix;
+                  nix = useFeatureAt ./features/nix/module.nix;
+                  nixos-module-compat = useFeatureAt ./features/nixos-module-compat/module.nix;
+                  patch-inputs = useFeatureAt ./features/patch-inputs/module.nix;
+                  patching-home-manager-for-vscode-profiles = useFeatureAt ./features/patching-home-manager-for-vscode-profiles/module.nix;
+                  pnpm = useFeatureAt ./features/pnpm/module.nix;
+                  powerline-fonts = useFeatureAt ./features/powerline-fonts/module.nix;
+                  security = useFeatureAt ./features/security/module.nix;
+                  synced-applications = useFeatureAt ./features/synced-applications/module.nix;
+                  trace-packages = useFeatureAt ./features/trace-packages/module.nix;
+                  zsh = useFeatureAt ./features/zsh/module.nix;
+                };
+
+                overlays = {
+                  nodejs-version = useFeatureAt ./features/nodejs-version/overlay.nix;
+                };
+
+                profiles = {
+                  default = useFeatureAt ./profiles/default/module.nix;
+                  minimal = useFeatureAt ./profiles/minimal/module.nix;
+                };
+              };
+              mkHostConfig = makeMkHostConfig {
+                nixpkgs = channels.nixpkgs;
+                system = channels.nixpkgs.system;
+                lib = lib;
+              };
+              mkFlake = flake-utils-plus.lib.mkFlake;
+            in
+            {
+              inherit (lib) patchInputs nixpkgsModulesPath featuresPath useFeatureAt features profiles overlays;
+              inherit mkHostConfig mkFlake;
             };
-            nixpkgsModulesPath = toString (inputs.nixpkgs + "/nixos/modules");
-            featuresPath = ./features;
-            useFeatureAt = import ./libraries/useFeatureAt.nix { };
-            mkHostConfig = mkHostConfig;
-          };
         };
-        hosts.default = mkHostConfig
-          {
-            modules = [
-              ./profiles/default/module.nix
-              # Should be last
-              ./features/trace-packages/module.nix
-            ];
-            inputPatchingModules = [
-              # ./features/patching-home-manager-for-vscode-profiles/module.nix
-            ];
-          };
-        hosts.minimal = mkHostConfig
-          {
-            modules = [
-              ./profiles/minimal/module.nix
-              # Should be last
-              ./features/trace-packages/module.nix
-            ];
-            inputPatchingModules = [
-              # ./features/patching-home-manager-for-vscode-profiles/module.nix
-            ];
-          };
+
+        hosts.default = mkHostConfig {
+          modules = [
+            ./profiles/default/module.nix
+            # Should be last
+            ./features/trace-packages/module.nix
+          ];
+          inputPatchingModules = [
+          ];
+        };
+        hosts.minimal = mkHostConfig {
+          modules = [
+            ./profiles/minimal/module.nix
+            # Should be last
+            ./features/trace-packages/module.nix
+          ];
+          inputPatchingModules = [
+          ];
+        };
       };
 }

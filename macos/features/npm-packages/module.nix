@@ -2,7 +2,7 @@
 , ...
 }: {
   imports = [
-    (useFeatureAt ../../../../features/global-npm-packages/module.nix)
+    (useFeatureAt ../global-npm-packages/module.nix)
   ];
 
   globalNpmPackages = {
