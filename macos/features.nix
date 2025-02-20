@@ -1,0 +1,23 @@
+{ useFeatureAt }: {
+  _1password-gui = useFeatureAt ./features/1password-gui/module.nix;
+  arc-browser = useFeatureAt ./features/arc-browser/module.nix;
+  darwin-refresh = useFeatureAt ./features/darwin-refresh/module.nix;
+  direnv = useFeatureAt ./features/direnv/module.nix;
+  docker-desktop = useFeatureAt ./features/docker-desktop/module.nix;
+  enable-sudo-touch = useFeatureAt ./features/enable-sudo-touch/module.nix;
+  fix-app-symlinks = useFeatureAt ./features/fix-app-symlinks/module.nix;
+  git-config = useFeatureAt ./features/git-config/module.nix;
+  global-npm-packages = useFeatureAt ./features/global-npm-packages/module.nix;
+  home-manager = useFeatureAt ./features/home-manager/module.nix;
+  mouse-and-trackpad = useFeatureAt ./features/mouse-and-trackpad/module.nix;
+  nix = useFeatureAt ./features/nix/module.nix;
+  nixos-module-compat = useFeatureAt ./features/nixos-module-compat/module.nix;
+  patch-inputs = useFeatureAt ./features/patch-inputs/module.nix;
+  patching-home-manager-for-vscode-profiles = useFeatureAt ./features/patching-home-manager-for-vscode-profiles/module.nix;
+  pnpm = useFeatureAt ./features/pnpm/module.nix;
+  powerline-fonts = useFeatureAt ./features/powerline-fonts/module.nix;
+  security = useFeatureAt ./features/security/module.nix;
+  synced-applications = useFeatureAt ./features/synced-applications/module.nix;
+  trace-packages = useFeatureAt ./features/trace-packages/module.nix;
+  zsh = useFeatureAt ./features/zsh/module.nix;
+}

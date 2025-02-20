@@ -1,7 +1,6 @@
 { lib
 , config
 , pkgs
-, flakePath
 , ...
 }:
 let
@@ -25,7 +24,7 @@ in
 
     darwinRefresh.flakePath = lib.mkOption {
       type = lib.types.str;
-      default = flakePath;
+      default = "";
       description = ''
         Path to the flake to run `darwin-rebuild` against. The path
         must stay the same across multiple hosts, if the configuration is used
@@ -52,8 +51,15 @@ in
     };
   };
 
-  config = {
-    environment.systemPackages = (if cfg.enable then [
+  config = lib.mkIf cfg.enable {
+    assertions = [
+      {
+        assertion = cfg.flakePath != "";
+        message = "Please specify darwinRefresh.flakePath option to use darwin-refresh feature.";
+      }
+    ];
+
+    environment.systemPackages = [
       (
         let
           git-add =
@@ -71,7 +77,7 @@ in
           darwin-rebuild switch --flake ${cfg.flakePath} --print-build-logs $@
         '')
       )
-    ] else [ ]);
+    ];
   };
 
 }

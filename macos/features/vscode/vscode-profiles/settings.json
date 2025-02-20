@@ -138,5 +138,6 @@
     "*.png": "editor.excalidraw"
   },
   "workbench.iconTheme": "material-icon-theme",
-  "zenMode.hideLineNumbers": false
+  "zenMode.hideLineNumbers": false,
+  "excalidraw.theme": "dark"
 }

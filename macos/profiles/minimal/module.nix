@@ -2,6 +2,7 @@
 
 
   imports = [
+    (useFeatureAt ./../../features/nix-darwin/module.nix)
     (useFeatureAt ./../../features/darwin-refresh/module.nix)
     (useFeatureAt ./../../features/fix-app-symlinks/module.nix)
     (useFeatureAt ./../../features/nix/module.nix)

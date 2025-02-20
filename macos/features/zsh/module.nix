@@ -1,9 +1,12 @@
 { pkgs
-, nixpkgsModulesPath
 , useFeatureAt
-, flakePath
+, inputs
 , ...
-}: {
+}:
+let
+  nixpkgsModulesPath = toString (inputs.nixpkgs + "/nixos/modules");
+in
+{
 
   # This imports oh-my-zsh module from nixpkgs
   imports = [
