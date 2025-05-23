@@ -7,12 +7,12 @@
     flake-utils.url = "github:numtide/flake-utils";
     flake-utils.inputs.systems.follows = "systems";
 
-    flake-utils-plus.url = "github:gytis-ivaskevicius/flake-utils-plus";
+    flake-utils-plus.url = "github:zaripych/flake-utils-plus";
     flake-utils-plus.inputs.flake-utils.follows = "flake-utils";
 
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
 
-    nix-darwin.url = "github:LnL7/nix-darwin";
+    nix-darwin.url = "github:nix-darwin/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
 
     home-manager.url = "github:nix-community/home-manager";
@@ -38,10 +38,8 @@
     }:
     let
       makeMkHostConfig = import ./libraries/makeMkHostConfig.nix;
-      pkgs = self.pkgs.aarch64-darwin.nixpkgs;
       mkHostConfig = makeMkHostConfig {
-        nixpkgs = pkgs;
-        system = pkgs.system;
+        system = "aarch64-darwin";
         lib = self.lib.aarch64-darwin;
         selfInputs = inputs;
       };
@@ -49,12 +47,6 @@
     flake-utils-plus.lib.mkFlake
       {
         inherit self inputs;
-
-        channelsConfig = { allowUnfree = true; };
-
-        sharedOverlays = [
-          (import ./features/nodejs-version/overlay.nix)
-        ];
 
         outputsBuilder = channels: {
           lib =
@@ -76,7 +68,6 @@
                 };
               };
               mkHostConfig = makeMkHostConfig {
-                nixpkgs = channels.nixpkgs;
                 system = channels.nixpkgs.system;
                 lib = lib;
                 selfInputs = inputs;

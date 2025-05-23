@@ -9,7 +9,7 @@
 let
   result =
     if builtins.length modules > 0 then
-      (pkgs.lib.evalModules {
+      (builtins.trace "Evaluating modules to find inputs to patch..." pkgs.lib.evalModules {
         modules = modules;
         specialArgs = args // {
           inherit pkgs;

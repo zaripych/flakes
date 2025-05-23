@@ -2,6 +2,11 @@
 
   imports = [
     (useFeatureAt ../synced-applications/module.nix)
+    {
+      nixpkgs.config = {
+        allowUnfree = true;
+      };
+    }
   ];
 
   environment.syncedApps = [

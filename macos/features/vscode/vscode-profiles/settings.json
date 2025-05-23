@@ -44,11 +44,8 @@
   "editor.guides.bracketPairs": true,
   "editor.inlineSuggest.enabled": true,
   "editor.stickyScroll.enabled": true,
-  "editor.tokenColorCustomizations": {
-    // "[Community Material Theme Darker High Contrast]": {
-    //   "comments": "#2299778d"
-    // }
-  },
+  "editor.tokenColorCustomizations": {},
+  "excalidraw.theme": "dark",
   "explorer.fileNesting.enabled": true,
   "github.copilot.editor.enableAutoCompletions": true,
   "github.copilot.enable": {
@@ -82,12 +79,7 @@
   "terminal.integrated.scrollback": 20000,
   "typescript.preferences.importModuleSpecifier": "relative",
   "typescript.updateImportsOnFileMove.enabled": "always",
-  // Vim easymotion is required for Jump menu - <SPC> j
   "vim.easymotion": true,
-  // Trigger the main which key menu with in the active editor with vim
-  // This cannot be put into keybindings.json because it will
-  // create conflict with Vim.
-  // https://github.com/stevenguh/spacecode/issues/3
   "vim.normalModeKeyBindingsNonRecursive": [
     {
       "before": ["u"],
@@ -108,7 +100,6 @@
       ]
     }
   ],
-  // Use system clipboard for vim
   "vim.useSystemClipboard": true,
   "vim.visualModeKeyBindingsNonRecursive": [
     {
@@ -139,5 +130,12 @@
   },
   "workbench.iconTheme": "material-icon-theme",
   "zenMode.hideLineNumbers": false,
-  "excalidraw.theme": "dark"
+  "roo-cline.allowedCommands": [
+    "npm test",
+    "npm install",
+    "tsc",
+    "git log",
+    "git diff",
+    "git show"
+  ]
 }

@@ -1,4 +1,4 @@
-{ nixpkgs, system, lib, selfInputs }:
+{ system, lib, selfInputs }:
 {
   # Modules to include in the host configuration
   modules
