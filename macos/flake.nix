@@ -18,14 +18,19 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
+    flake-compat.url = "github:hraban/flake-compat";
+    flake-compat.flake = false;
+
     mac-app-utils.url = "github:hraban/mac-app-util";
     mac-app-utils.inputs.nixpkgs.follows = "nixpkgs";
     mac-app-utils.inputs.flake-utils.follows = "flake-utils";
     mac-app-utils.inputs.systems.follows = "systems";
+    mac-app-utils.inputs.flake-compat.follows = "flake-compat";
 
     nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
     nix-vscode-extensions.inputs.nixpkgs.follows = "nixpkgs";
     nix-vscode-extensions.inputs.flake-utils.follows = "flake-utils";
+    nix-vscode-extensions.inputs.flake-compat.follows = "flake-compat";
 
     call-flake.url = "github:divnix/call-flake";
   };

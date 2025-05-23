@@ -42,7 +42,6 @@
       },
       "original": {
         "owner": "hraban",
-        "ref": "fixed-output",
         "repo": "flake-compat",
         "type": "github"
       }
@@ -110,7 +109,9 @@
     "mac-app-utils": {
       "inputs": {
         "cl-nix-lite": "cl-nix-lite",
-        "flake-compat": "flake-compat",
+        "flake-compat": [
+          "flake-compat"
+        ],
         "flake-utils": [
           "flake-utils"
         ],
@@ -197,6 +198,7 @@
     "root": {
       "inputs": {
         "call-flake": "call-flake",
+        "flake-compat": "flake-compat",
         "flake-utils": "flake-utils",
         "flake-utils-plus": "flake-utils-plus",
         "home-manager": "home-manager",
