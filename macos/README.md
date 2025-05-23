@@ -17,7 +17,7 @@ We can reuse from this flake and customize it in your own flake:
 
 ```nix
 {
-  description = "A nix-darwin configuration flake for my work laptop";
+  description = "A nix-darwin configuration flake for my personal laptops";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
@@ -33,10 +33,7 @@ We can reuse from this flake and customize it in your own flake:
     flakes.lib.aarch64-darwin.mkFlake {
       inherit self inputs;
 
-      channelsConfig = { allowUnfree = true; };
-
       hosts.prp-2024 = mkHostConfig {
-        flakePath = "~/Projects/local-flakes";
         modules = [
           # Inherit from the default profile in `flakes`
           profiles.default
@@ -46,14 +43,15 @@ We can reuse from this flake and customize it in your own flake:
             # `flakePath` and use that path to pass to `darwin-rebuild`
             # which means you only need to run `darwin-refresh` to rebuild
             darwinRefresh.enable = true;
+            darwinRefresh.flakePath = "~/Projects/local-flakes";
             # We are inheriting from `flakes` so we want to refresh
             # the input in case it changes
             darwinRefresh.updateInputs = [ "flakes" ];
             darwinRefresh.gitAddPaths = [
-              # The flake I'm inheriting from is located in this path
+              # The flake I'm inheriting from is located at this path
               # and we want to `git add .` there before running
               # `darwin-rebuild` to rebuild the system
-              "/Users/rz/Projects/flakes/macos"
+              "~/Projects/flakes/macos"
             ];
           }
           # Your custom modules
@@ -63,8 +61,6 @@ We can reuse from this flake and customize it in your own flake:
           ./features/vault/module.nix
           # Debug which flakes.* modules are used
           features.trace-packages
-        ];
-        inputPatchingModules = [
         ];
       };
     };
