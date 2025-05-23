@@ -30,7 +30,6 @@
     nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
     nix-vscode-extensions.inputs.nixpkgs.follows = "nixpkgs";
     nix-vscode-extensions.inputs.flake-utils.follows = "flake-utils";
-    nix-vscode-extensions.inputs.flake-compat.follows = "flake-compat";
 
     call-flake.url = "github:divnix/call-flake";
   };
@@ -83,6 +82,13 @@
               inherit (lib) patchInputs featuresPath useFeatureAt features profiles overlays;
               inherit mkHostConfig mkFlake;
             };
+
+          devShells.default = channels.nixpkgs.mkShell {
+            packages = with nix-darwin.packages.aarch64-darwin; [
+              darwin-rebuild
+              darwin-version
+            ];
+          };
         };
 
         hosts.default = mkHostConfig {
