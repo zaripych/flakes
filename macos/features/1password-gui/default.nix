@@ -1,10 +1,10 @@
 { fetchurl, _1password-gui, ... }:
 
 _1password-gui.overrideAttrs (oldAttrs: rec {
-  version = "8.10.58";
+  version = "8.10.82";
   src = fetchurl {
     url = "https://downloads.1password.com/mac/1Password-${version}-aarch64.zip";
-    hash = "sha256-7SczaIcY/bQtTy6ODQh464/14q+VvgnJr7EdhEzevCs=";
+    hash = "sha256-uXtXDfCE+CFaOXqpSEKh2x7lzeYOhrHoH017NzNS2p8=";
   };
 
   # Don't fixup the app, we don't want to break the code signatures

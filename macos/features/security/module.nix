@@ -3,5 +3,5 @@
   system.defaults.finder.AppleShowAllExtensions = true;
   system.defaults.NSGlobalDomain.AppleShowAllExtensions = true;
   # Firewall
-  system.defaults.alf.globalstate = 1;
+  networking.applicationFirewall.enable = true;
 }

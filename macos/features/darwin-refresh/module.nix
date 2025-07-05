@@ -74,7 +74,7 @@ in
         (pkgs.writeShellScriptBin "darwin-refresh" ''
           ${git-add}
           ${refresh-inputs}
-          darwin-rebuild switch --flake ${cfg.flakePath} --print-build-logs $@
+          sudo darwin-rebuild switch --flake ${cfg.flakePath} --print-build-logs $@
         '')
       )
     ];
