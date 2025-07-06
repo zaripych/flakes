@@ -37,22 +37,6 @@ in
             builtins.trace "No vscode-marketplace found!" null));
       in
       {
-        home.activation.vscodeRemoveExistingFiles = inputs.home-manager.lib.hm.dag.entryBefore [ "checkLinkTargets" ] ''
-          function backup_and_remove_if_regular_file() {
-            local file="$1"
-            if [ -f "$file" ] && [ ! -L "$file" ]; then
-              echo "Backing up existing file: $file -> $file.before-activation.bak"
-              cp "$file" "$file.before-activation.bak"
-              rm -f "$file"
-            fi
-          }
-          
-          echo "Backing up and removing existing VSCode settings to allow symlinks"
-          ROOT="$HOME/Library/Application Support/Code/User"
-          backup_and_remove_if_regular_file "$ROOT/keybindings.json"
-          backup_and_remove_if_regular_file "$ROOT/settings.json"
-        '';
-
         home.activation.vscodeMakeSettingsEditable = inputs.home-manager.lib.hm.dag.entryAfter [ "linkGeneration" ] ''
           echo "Running vscode-allow-editing-settings"
           # If keybindings is a link to /nix/store, then it's not editable
