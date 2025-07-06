@@ -37,6 +37,62 @@ in
             builtins.trace "No vscode-marketplace found!" null));
       in
       {
+        home.activation.vscodeRemoveExistingFiles = inputs.home-manager.lib.hm.dag.entryBefore [ "checkLinkTargets" ] ''
+          function backup_and_remove_if_regular_file() {
+            local file="$1"
+            if [ -f "$file" ] && [ ! -L "$file" ]; then
+              echo "Backing up existing file: $file -> $file.before-activation.bak"
+              cp "$file" "$file.before-activation.bak"
+              rm -f "$file"
+            fi
+          }
+          
+          echo "Backing up and removing existing VSCode settings to allow symlinks"
+          ROOT="$HOME/Library/Application Support/Code/User"
+          backup_and_remove_if_regular_file "$ROOT/keybindings.json"
+          backup_and_remove_if_regular_file "$ROOT/settings.json"
+        '';
+
+        home.activation.vscodeMakeSettingsEditable = inputs.home-manager.lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+          echo "Running vscode-allow-editing-settings"
+          # If keybindings is a link to /nix/store, then it's not editable
+          # so we need to check if it is a symlink and if so, then copy the
+          # symlinked resource and allow the user to change it
+
+          function is_symlink() {
+            [ -L "$1" ]
+          }
+
+          function make_editable_if_symlink() {
+            TARGET="$1"
+            TARGET_BACKUP="$TARGET.bak"
+            if is_symlink "$TARGET"; then
+              # Remove existing backup if it exists
+              if [ -f "$TARGET_BACKUP" ]; then
+                echo "Removing existing backup: $TARGET_BACKUP"
+                rm -f "$TARGET_BACKUP"
+              fi
+              
+              echo "Copying $TARGET to $TARGET_BACKUP"
+              cp -v "$TARGET" "$TARGET_BACKUP"
+              chmod u+w "$TARGET_BACKUP"  # Make backup writable since it came from nix store
+              unlink "$TARGET"
+              echo "Creating editable copy of $TARGET"
+              cp -v "$TARGET_BACKUP" "$TARGET"
+              chmod u+w "$TARGET"
+            else
+              echo "Not a symlink, no need to copy: $TARGET"
+            fi
+          }
+
+          ROOT="$HOME/Library/Application Support/Code/User"
+          KEYBINDINGS="$ROOT/keybindings.json"
+          SETTINGS="$ROOT/settings.json"
+
+          make_editable_if_symlink "$KEYBINDINGS"
+          make_editable_if_symlink "$SETTINGS"
+        '';
+
         programs.vscode = {
           enable =
             if vscode-marketplace != null then
