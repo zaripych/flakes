@@ -1,12 +1,9 @@
-// Place your key bindings in this file to override the defaults
 [
-  // Trigger vspacecode in empty editor group
   {
     "command": "vspacecode.space",
     "key": "space",
     "when": "activeEditorGroupEmpty && focusedView == '' && !whichkeyActive && !inputFocus"
   },
-  // Trigger vspacecode when sidebar is in focus
   {
     "command": "vspacecode.space",
     "key": "space",
@@ -17,9 +14,6 @@
     "key": "alt+space",
     "when": "!editorFocus && !whichkeyActive"
   },
-  // Keybindings required for edamagit
-  // https://github.com/kahole/edamagit#vim-support-vscodevim
-  // Cannot be added to package.json because keybinding replacements
   {
     "command": "extension.vim_tab",
     "key": "tab",
@@ -73,8 +67,6 @@
     "command": "-magit.reset-hard",
     "key": "ctrl+u x"
   },
-  // Extra ref menu support for edamagit with the key "y"
-  // Cannot be added to package.json because keybinding replacements
   {
     "command": "-magit.show-refs",
     "key": "y"
@@ -84,7 +76,6 @@
     "key": "y",
     "when": "editorTextFocus && editorLangId == 'magit' && vim.mode == 'Normal'"
   },
-  // Easy navigation in quick open/QuickPick
   {
     "command": "workbench.action.quickOpenSelectNext",
     "key": "ctrl+j",
@@ -95,8 +86,6 @@
     "key": "ctrl+k",
     "when": "inQuickOpen"
   },
-  // Easy navigation in suggestion/intellisense
-  // Cannot be added to package.json because of conflict with vim's default bindings
   {
     "command": "selectNextSuggestion",
     "key": "ctrl+j",
@@ -112,8 +101,6 @@
     "key": "ctrl+l",
     "when": "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus"
   },
-  // Easy navigation in parameter hint (i.e. traverse the hints when there's multiple overload for one method)
-  // Cannot be added to package.json because of conflict with vim's default bindings
   {
     "command": "showNextParameterHint",
     "key": "ctrl+j",
@@ -124,7 +111,6 @@
     "key": "ctrl+k",
     "when": "editorFocus && parameterHintsMultipleSignatures && parameterHintsVisible"
   },
-  // Add ctrl+h/l to navigate in file browser
   {
     "command": "file-browser.stepOut",
     "key": "ctrl+h",
@@ -148,7 +134,18 @@
   {
     "command": "workbench.action.togglePanel",
     "key": "shift+cmd+j",
-    "when": "terminalFocus || panelVisible"
+    "when": "terminalFocus && panelVisible"
+  },
+  {
+    "args": {
+      "commands": [
+        "workbench.action.terminal.focus",
+        "workbench.action.terminal.scrollToBottom"
+      ]
+    },
+    "command": "runCommands",
+    "key": "shift+cmd+j",
+    "when": "!terminalFocus && panelVisible"
   },
   {
     "args": {
@@ -161,6 +158,16 @@
     "command": "runCommands",
     "key": "shift+cmd+j",
     "when": "!terminalFocus && !panelVisible"
+  },
+  {
+    "command": "wallaby.focusOverview",
+    "key": "shift+cmd+k",
+    "when": "!view.wallaby.overview.visible"
+  },
+  {
+    "command": "workbench.action.togglePanel",
+    "key": "shift+cmd+k",
+    "when": "view.wallaby.overview.visible"
   },
   {
     "command": "workbench.action.switchWindow",
@@ -191,19 +198,15 @@
     "when": "editorTextFocus && vim.active && !inDebugRepl && vim.mode == 'Normal' && !suggestWidgetMultipleSuggestions && !suggestWidgetVisible"
   },
   {
-    "key": "shift+cmd+k",
     "command": "-editor.action.deleteLines",
+    "key": "shift+cmd+k",
     "when": "textInputFocus && !editorReadonly"
   },
   {
-    "key": "shift+cmd+k",
-    "command": "wallaby.focusOverview"
-  },
-  {
-    "key": "shift+enter",
-    "command": "workbench.action.terminal.sendSequence",
     "args": {
       "text": "\\r\n"
-    }
+    },
+    "command": "workbench.action.terminal.sendSequence",
+    "key": "shift+enter"
   }
 ]
