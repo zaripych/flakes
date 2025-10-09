@@ -1,6 +1,5 @@
 { useFeatureAt }: {
   _1password-gui = useFeatureAt ./features/1password-gui/module.nix;
-  arc-browser = useFeatureAt ./features/arc-browser/module.nix;
   darwin-refresh = useFeatureAt ./features/darwin-refresh/module.nix;
   direnv = useFeatureAt ./features/direnv/module.nix;
   docker-desktop = useFeatureAt ./features/docker-desktop/module.nix;

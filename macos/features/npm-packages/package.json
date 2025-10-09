@@ -2,7 +2,6 @@
   "name": "defaults",
   "version": "0.0.0-development",
   "dependencies": {
-    "git-pr-train": "2.5.1",
-    "wait-on": "^8.0.1"
+    "@anthropic-ai/claude-code": "2.0.11"
   }
 }

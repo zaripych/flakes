@@ -113,7 +113,7 @@ in
                 vscode-extensions.ms-vscode-remote.remote-ssh-edit
 
                 vscode-extensions.github.copilot
-                pkgs.vscode-extensions.github.copilot-chat
+                # pkgs.vscode-extensions.github.copilot-chat
                 vscode-extensions.github.vscode-github-actions
 
                 vscode-extensions.zhuangtongfa.material-theme # One Dark Pro

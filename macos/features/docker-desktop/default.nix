@@ -7,12 +7,12 @@
 stdenvNoCC.mkDerivation
   (finalAttrs: {
     pname = "docker-desktop";
-    version = "4.44.3-202357";
+    version = "4.47.0-206054";
 
     src = fetchurl {
       # Releases https://docs.docker.com/desktop/release-notes/
-      url = "https://desktop.docker.com/mac/main/arm64/202357/Docker.dmg";
-      hash = "sha256-1bh6EbdN2JphmrNwRQT+ffLnIBikl2llHr7/xE+BecM=";
+      url = "https://desktop.docker.com/mac/main/arm64/206054/Docker.dmg";
+      hash = "sha256-eGg/ooT427EmKPiUM2XGfjm9g7DHaxQwoYCfFOaMvG4=";
     };
 
     nativeBuildInputs = [ undmg ];

@@ -1,3 +1,3 @@
 final: prev: {
-  nodejs = prev.nodejs_20;
+  nodejs = prev.nodejs_22;
 }

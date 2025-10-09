@@ -26,6 +26,7 @@
     mac-app-utils.inputs.flake-utils.follows = "flake-utils";
     mac-app-utils.inputs.systems.follows = "systems";
     mac-app-utils.inputs.flake-compat.follows = "flake-compat";
+    mac-app-utils.inputs.treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
 
     nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
     nix-vscode-extensions.inputs.nixpkgs.follows = "nixpkgs";
@@ -76,7 +77,9 @@
                 lib = lib;
                 selfInputs = inputs;
               };
-              mkFlake = flake-utils-plus.lib.mkFlake;
+              mkFlake = attrs: flake-utils-plus.lib.mkFlake (attrs // ({
+                inputs = inputs // attrs.inputs;
+              }));
             in
             {
               inherit (lib) patchInputs featuresPath useFeatureAt features profiles overlays;
