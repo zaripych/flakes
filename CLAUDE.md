@@ -4,34 +4,35 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Repository Overview
 
-This repository contains a nix-darwin configuration flake for macOS systems. It serves as a personal dotfiles repository shared across computers, with a modular design to make components less coupled. The codebase is organized into features and profiles that can be combined to create customized system configurations.
+This repository contains Nix configuration flakes for both macOS (via nix-darwin) and Linux (via NixOS) systems. It serves as a personal dotfiles repository shared across computers, with a modular design to make components less coupled. The codebase is organized into features that can be combined to create customized system configurations for either platform.
 
 ## Key Commands
 
 ### System Setup and Management
 
-- `~/Projects/flakes/macos/bootstrap.sh` - Initial setup script for a new machine
-- `darwin-refresh` - Updates and rebuilds the system with latest changes
+- `bootstrap.sh` - Initial setup script for a new macOS machine (located in repository root)
+- `system-refresh` - Updates and rebuilds the system with latest changes (works on both macOS and Linux)
   - Optionally runs `git add .` on specified paths
   - Optionally updates specified flake inputs
-  - Runs `darwin-rebuild switch` against the configured flake path
+  - Runs `darwin-rebuild` (macOS) or `nixos-rebuild` (Linux) with the configured flake path
 
 ### Adding New Features
 
 When adding a new feature:
 
-1. Create a new directory under `features/` with a descriptive name
+1. Create a new directory under `features/` (for cross-platform) or `linux/features/` (for Linux-only) with a descriptive name
 2. Add a `module.nix` file implementing the feature
-3. Add the feature to `features.nix` using the pattern in that file
-4. Import the feature in the appropriate profile or in your custom flake configuration
+3. Import the feature in the appropriate platform module (`macos/module.nix` or `linux/module.nix`)
 
 ## Architecture
 
 ### Directory Structure
 
-- `/features/` - Modular components for specific functionality
-- `/profiles/` - Pre-configured combinations of features
-- `/libraries/` - Helper functions and utilities
+- `/features/` - Shared modular components for specific functionality (cross-platform)
+- `/macos/` - macOS-specific configuration and module imports
+- `/linux/` - Linux-specific configuration and module imports
+- `/linux/features/` - Linux-only features (e.g., Hyprland, key-remapping, Steam)
+- `/libs/` - Helper functions and utilities
 - `flake.nix` - Main configuration entry point
 
 ### Key Components
@@ -41,54 +42,50 @@ When adding a new feature:
    - Each feature is a self-contained module in the `features/` directory
    - Features typically contain a `module.nix` defining configuration
    - Some features include `overlay.nix` for package overrides
+   - Platform-specific features are in `/linux/features/` for Linux-only components
 
-2. **Profiles System**:
+2. **Platform Modules**:
 
-   - `minimal` - Essential system configuration
-   - `default` - Extends `minimal` with additional development tools and applications
+   - `macos/module.nix` - Imports features and configurations for macOS systems
+   - `linux/module.nix` - Imports features and configurations for Linux/NixOS systems
+   - Both modules are exposed as `darwinModules.default` and `nixosModules.default` respectively
 
-3. **Host Configuration System**:
-
-   - `mkHostConfig` function creates darwin system configurations
-   - Handles setting up modules, special arguments, and patching inputs
-
-4. **darwin-refresh Command**:
-   - A tiny wrapper around `darwin-rebuild switch`
-   - Defined in `./features/darwin-refresh/module.nix``
+3. **system-refresh Command**:
+   - A cross-platform wrapper around `darwin-rebuild` (macOS) or `nixos-rebuild` (Linux)
+   - Defined in `./features/system-refresh/module.nix`
    - Simplifies the process of updating and rebuilding the system
    - Manages git staging, flake updates, and system rebuilding in one command
+   - Automatically detects the platform and uses the appropriate rebuild command
 
 # Workflows
 
-Make sure to test every change using the `darwin-rebuild` command to ensure that your modifications work as expected. To execute `darwin-rebuild` correctly on current host use `./test-build.sh` script.
+Make sure to test every change by building the configuration first to ensure that your modifications work as expected. To test the build on the current host use the test script:
 
 ```bash
-./dev/test-build.sh
+./scripts/test-build.sh
 ```
 
-This command will do the following:
+This command runs `system-refresh build`, which will:
 
-- Find the `darwin-refresh` script in your PATH and execute similar script
-  but instead of doing `switch` command it will do `build` command.
-- It will build the current configuration. Building involves evaluation of the
-  nix expressions we used in our flake files, building the `nix-darwin` derivation, which involves creation of activation script. There is an activation script for `nix-darwin` and one for `home-manager` which is used to apply the changes made in the configuration.
-- After the build is complete, the `./result` directory represent the artifacts that would be applied to the system if you were to run `darwin-refresh` with the `switch` command - which basically runs the activation scripts.
+- Build the current configuration without applying it, involving:
+  - Evaluation of the nix expressions in the flake files
+  - Building the system derivation (nix-darwin on macOS, NixOS on Linux)
+  - Creating activation scripts for both the system and home-manager
+- After the build completes, the `./result` directory contains the artifacts that would be applied with `system-refresh switch`
 
-If the build command is successful, we can ask the user to try to apply the changes with:
+If the build command is successful, apply the changes with:
 
 ```bash
-darwin-refresh
+system-refresh switch
 ```
 
 ## Build and Output
 
-- If the build is successful, you can see the build results in `./result` directory, it is git ignored.
-- When debugging nix-darwin activation scripts, you can see the script source code in the `./result/activate` file. The `./result/activate-user` is being deprecated, do not use it.
-- When debugging home-manager activation script, determining its location might be a challenge, but can be found if you build the configuration with extra verbosity:
+- If the build is successful, you can see the build results in `./result` directory (git ignored)
+- When debugging activation scripts, you can view the system activation script in `./result/activate`
+- For home-manager activation scripts, determining the location might require inspecting the build output
 
-```bash
-./dev/find-home-manager-activation-script.sh
-```
+**Note:** The `./scripts/test-build.sh` script has not been tested on Linux yet and may need adjustments for NixOS.
 
 ## How to fix "attribute 'xxx' missing" errors
 

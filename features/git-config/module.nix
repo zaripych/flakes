@@ -1,4 +1,5 @@
 {
+  lib,
   pkgs,
   username,
   ...
@@ -10,8 +11,6 @@
   environment.systemPackages = with pkgs; [
     git
     git-lfs
-    # Used as core.editor
-    vim
     # For easy auth with github
     gh
   ];
@@ -24,7 +23,7 @@
         push.autoSetupRemote = true;
         merge.conflictStyle = "diff3";
         core.editor = "nvim";
-        credential.helper = "osxkeychain";
+        credential.helper = lib.optionalString (pkgs.system == "aarch64-darwin") "osxkeychain";
       };
     };
   };

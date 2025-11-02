@@ -1,5 +1,5 @@
 {
-  description = "A nix-darwin configuration flake for my personal laptops";
+  description = "A configuration/module flake for my personal laptops";
 
   inputs = {
     systems.url = "github:nix-systems/aarch64-darwin";
@@ -8,6 +8,7 @@
     flake-utils.inputs.systems.follows = "systems";
 
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixpkgs-unstable";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs?ref=nixpkgs-unstable";
 
     nix-darwin.url = "github:nix-darwin/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
@@ -37,6 +38,14 @@
     nvf.inputs.nixpkgs.follows = "nixpkgs";
     nvf.inputs.flake-parts.follows = "flake-parts";
     nvf.inputs.flake-compat.follows = "flake-compat";
+
+    hyprland.url = "github:hyprwm/Hyprland";
+
+    xremap.url = "github:xremap/nix-flake";
+    xremap.inputs.nixpkgs.follows = "nixpkgs-unstable";
+    xremap.inputs.home-manager.follows = "home-manager";
+    xremap.inputs.flake-parts.follows = "flake-parts";
+    xremap.inputs.hyprland.follows = "hyprland";
   };
 
   outputs = inputs @ {
@@ -66,10 +75,18 @@
         }
 
         ./features/nvim/part.nix
+        ./features/zsh/part.nix
 
         {
           flake.darwinModules.default = ./macos/module.nix;
           flake.nixosModules.default = ./linux/module.nix;
+
+          flake.nixosConfigurations.default = lib.mkHostConfig {
+            system = "x86_64-linux";
+            modules = [
+              ./linux/module.nix
+            ];
+          };
         }
       ];
     };

@@ -1,0 +1,365 @@
+diff --git a/Cargo.lock b/Cargo.lock
+index fe67c18..e41f93e 100644
+--- a/Cargo.lock
++++ b/Cargo.lock
+@@ -211,6 +211,28 @@ dependencies = [
+  "windows-sys 0.59.0",
+ ]
+ 
++[[package]]
++name = "async-stream"
++version = "0.3.6"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "0b5a71a6f37880a80d1d7f19efd781e4b5de42c88f0722cc13bcb6cc2cfe8476"
++dependencies = [
++ "async-stream-impl",
++ "futures-core",
++ "pin-project-lite",
++]
++
++[[package]]
++name = "async-stream-impl"
++version = "0.3.6"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "c7c24de15d275a1ecfd47a380fb4d5ec9bfe0933f309ed5e705b775596a3574d"
++dependencies = [
++ "proc-macro2",
++ "quote",
++ "syn",
++]
++
+ [[package]]
+ name = "async-task"
+ version = "4.7.1"
+@@ -382,7 +404,7 @@ version = "4.3.12"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "54a9bb5758fc5dfe728d1019941681eccaf0cf8a4189b692a0ee2f2ecf90a050"
+ dependencies = [
+- "heck 0.4.1",
++ "heck",
+  "proc-macro2",
+  "quote",
+  "syn",
+@@ -409,12 +431,6 @@ dependencies = [
+  "crossbeam-utils",
+ ]
+ 
+-[[package]]
+-name = "convert_case"
+-version = "0.4.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "6245d59a3e82a7fc217c5828a6692dbc6dfb63a0c8c90495621f7b9d79704a0e"
+-
+ [[package]]
+ name = "core-foundation-sys"
+ version = "0.8.4"
+@@ -487,15 +503,23 @@ dependencies = [
+ 
+ [[package]]
+ name = "derive_more"
+-version = "0.99.18"
++version = "2.0.1"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "093242cf7570c207c83073cf82f79706fe7b8317e98620a47d5be7c3d8497678"
++dependencies = [
++ "derive_more-impl",
++]
++
++[[package]]
++name = "derive_more-impl"
++version = "2.0.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "5f33878137e4dafd7fa914ad4e259e18a4e8e532b9617a2d0150262bf53abfce"
++checksum = "bda628edc44c4bb645fbe0f758797143e4e07926f7ebf4e9bdfbd3d2ce621df3"
+ dependencies = [
+- "convert_case",
+  "proc-macro2",
+  "quote",
+- "rustc_version",
+  "syn",
++ "unicode-xid",
+ ]
+ 
+ [[package]]
+@@ -507,18 +531,18 @@ dependencies = [
+  "libloading",
+ ]
+ 
+-[[package]]
+-name = "doc-comment"
+-version = "0.3.3"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "fea41bba32d969b513997752735605054bc0dfa92b4c56bf1189f2e174be7a10"
+-
+ [[package]]
+ name = "downcast-rs"
+ version = "1.2.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "9ea835d29036a4087793836fa931b08837ad5e957da9e23886b29586fb9b6650"
+ 
++[[package]]
++name = "either"
++version = "1.15.0"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "48c757948c5ede0e46177b7add2e67155f70e33c07fea8284df6576da70b3719"
++
+ [[package]]
+ name = "endi"
+ version = "1.1.0"
+@@ -771,12 +795,6 @@ version = "0.4.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "95505c38b4572b2d910cecb0281560f54b440a19336cbbcb27bf6ce6adc6f5a8"
+ 
+-[[package]]
+-name = "heck"
+-version = "0.5.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "2304e00983f87ffb38b55b444b5e3b60a884b5d30c0fca7d82fe33449bbe55ea"
+-
+ [[package]]
+ name = "hermit-abi"
+ version = "0.3.2"
+@@ -803,33 +821,29 @@ checksum = "9a3a5bfb195931eeb336b2a7b4d761daec841b97f947d34394601737a7bba5e4"
+ 
+ [[package]]
+ name = "hyprland"
+-version = "0.3.13"
++version = "0.4.0-beta.3"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "f87a8f1cc065d451894dd3916c0bc3fcf9b67b276126c05f27b1db912688dde8"
++checksum = "62fc24052f578592af91e5c60da1893ba6aea266b6ab86ffb72a644cf213fea9"
+ dependencies = [
+- "async-trait",
++ "async-stream",
+  "derive_more",
+- "doc-comment",
+- "futures",
+- "hex",
++ "either",
++ "futures-lite",
+  "hyprland-macros",
+- "lazy_static",
+- "num-traits",
+- "paste",
+- "regex",
++ "pastey",
+  "serde",
+  "serde_json",
+  "serde_repr",
+- "strum",
+  "tokio",
+ ]
+ 
+ [[package]]
+ name = "hyprland-macros"
+-version = "0.3.4"
++version = "0.4.0-beta.3"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "c941d3d52e979612af8cb94e8de49000c7fada2014a7791d173ab41339f4e4eb"
++checksum = "31157e6ccefbad4b0cd7e549db6696691a70c11b108f26bf6bf76eef26af8c10"
+ dependencies = [
++ "proc-macro2",
+  "quote",
+  "syn",
+ ]
+@@ -972,16 +986,6 @@ version = "0.9.4"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "cd945864f07fe9f5371a27ad7b52a172b4b499999f1d97574c9fa68373937e12"
+ 
+-[[package]]
+-name = "lock_api"
+-version = "0.4.12"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "07af8b9cdd281b7915f413fa73f29ebd5d55d0d3f0155584dade1ff18cea1b17"
+-dependencies = [
+- "autocfg",
+- "scopeguard",
+-]
+-
+ [[package]]
+ name = "log"
+ version = "0.4.28"
+@@ -1090,16 +1094,6 @@ dependencies = [
+  "autocfg",
+ ]
+ 
+-[[package]]
+-name = "num_cpus"
+-version = "1.16.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "4161fcb6d602d4d2081af7c3a45852d875a03dd337a6bfdd6e06407b61342a43"
+-dependencies = [
+- "hermit-abi 0.3.2",
+- "libc",
+-]
+-
+ [[package]]
+ name = "object"
+ version = "0.32.2"
+@@ -1132,33 +1126,10 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "f38d5652c16fde515bb1ecef450ab0f6a219d619a7274976324d5e377f7dceba"
+ 
+ [[package]]
+-name = "parking_lot"
+-version = "0.12.3"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "f1bf18183cf54e8d6059647fc3063646a1801cf30896933ec2311622cc4b9a27"
+-dependencies = [
+- "lock_api",
+- "parking_lot_core",
+-]
+-
+-[[package]]
+-name = "parking_lot_core"
+-version = "0.9.9"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "4c42a9226546d68acdd9c0a280d17ce19bfe27a46bf68784e4066115788d008e"
+-dependencies = [
+- "cfg-if",
+- "libc",
+- "redox_syscall",
+- "smallvec",
+- "windows-targets 0.48.1",
+-]
+-
+-[[package]]
+-name = "paste"
+-version = "1.0.15"
++name = "pastey"
++version = "0.1.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "57c0d7b74b563b49d38dae00a0c37d4d6de9b432382b2892f0574ddcae73fd0a"
++checksum = "35fb2e5f958ec131621fdd531e9fc186ed768cbe395337403ae56c17a74c68ec"
+ 
+ [[package]]
+ name = "pin-project-lite"
+@@ -1246,15 +1217,6 @@ version = "0.7.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "dc33ff2d4973d518d823d61aa239014831e521c75da58e3df4840d3f47749d09"
+ 
+-[[package]]
+-name = "redox_syscall"
+-version = "0.4.1"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "4722d768eff46b75989dd134e5c353f0d6296e5aaa3132e776cbdb56be7731aa"
+-dependencies = [
+- "bitflags 1.3.2",
+-]
+-
+ [[package]]
+ name = "regex"
+ version = "1.11.3"
+@@ -1290,15 +1252,6 @@ version = "0.1.24"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "719b953e2095829ee67db738b3bfa9fa368c94900df327b3f07fe6e794d2fe1f"
+ 
+-[[package]]
+-name = "rustc_version"
+-version = "0.4.1"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "cfcb3a22ef46e85b45de6ee7e79d063319ebb6594faafcf1c225ea92ab6e9b92"
+-dependencies = [
+- "semver",
+-]
+-
+ [[package]]
+ name = "rustix"
+ version = "0.38.44"
+@@ -1325,12 +1278,6 @@ dependencies = [
+  "windows-sys 0.60.2",
+ ]
+ 
+-[[package]]
+-name = "rustversion"
+-version = "1.0.18"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "0e819f2bc632f285be6d7cd36e25940d45b2391dd6d9b939e79de557f7014248"
+-
+ [[package]]
+ name = "ryu"
+ version = "1.0.15"
+@@ -1343,18 +1290,6 @@ version = "1.0.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "e1cf6437eb19a8f4a6cc0f7dca544973b0b78843adbfeb3683d1a94a0024a294"
+ 
+-[[package]]
+-name = "scopeguard"
+-version = "1.2.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "94143f37725109f92c262ed2cf5e59bce7498c01bcc1502d7b9afe439a4e9f49"
+-
+-[[package]]
+-name = "semver"
+-version = "1.0.23"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "61697e0a1c7e512e84a621326239844a24d8207b4669b41bc18b32ea5cbf988b"
+-
+ [[package]]
+ name = "serde"
+ version = "1.0.228"
+@@ -1506,28 +1441,6 @@ version = "0.10.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "73473c0e59e6d5812c5dfe2a064a6444949f089e20eec9a2e5506596494e4623"
+ 
+-[[package]]
+-name = "strum"
+-version = "0.26.3"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "8fec0f0aef304996cf250b31b5a10dee7980c85da9d759361292b8bca5a18f06"
+-dependencies = [
+- "strum_macros",
+-]
+-
+-[[package]]
+-name = "strum_macros"
+-version = "0.26.4"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "4c6bee85a5a24955dc440386795aa378cd9cf82acd5f764469152d2270e581be"
+-dependencies = [
+- "heck 0.5.0",
+- "proc-macro2",
+- "quote",
+- "rustversion",
+- "syn",
+-]
+-
+ [[package]]
+ name = "syn"
+ version = "2.0.86"
+@@ -1605,10 +1518,7 @@ dependencies = [
+  "bytes",
+  "libc",
+  "mio",
+- "num_cpus",
+- "parking_lot",
+  "pin-project-lite",
+- "signal-hook-registry",
+  "socket2",
+  "tokio-macros",
+  "windows-sys 0.48.0",
+@@ -1741,6 +1651,12 @@ version = "1.0.11"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "301abaae475aa91687eb82514b328ab47a211a533026cb25fc3e519b86adfc3c"
+ 
++[[package]]
++name = "unicode-xid"
++version = "0.2.6"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "ebc1c04c71510c7f702b52b7c350734c9ff1295c464a03335b00bb84fc54f853"
++
+ [[package]]
+ name = "unsafe-libyaml"
+ version = "0.2.11"
+diff --git a/Cargo.toml b/Cargo.toml
+index 885d4cd..99540bd 100644
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -29,7 +29,7 @@ wayland-client = { version = "0.30", optional = true }
+ wayland-protocols-wlr = { version = "0.1", features = ["client"], optional = true }
+ x11rb = { version = "0.13.2", optional = true }
+ zbus = { version = "5.11.0", optional = true }
+-hyprland = { version = "0.3.13", optional = true }
++hyprland = { version = "0.4.0-beta.3", optional = true }
+ toml = "0.9.5"
+ udev = { version = "0.9.3", optional = true }
+ futures = "0.3.31"

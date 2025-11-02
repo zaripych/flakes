@@ -10,6 +10,17 @@
       style = "dark";
     };
 
+    git = {
+      neogit.enable = true;
+    };
+
+    assistant = {
+      copilot = {
+        enable = true;
+        cmp.enable = true;
+      };
+    };
+
     lsp = {
       enable = true;
 

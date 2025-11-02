@@ -46,8 +46,8 @@ We can reuse from this flake and customize it in your own flake:
           {
             # `system-refresh` allows us to refresh the system with
             # minimum fuss, it will expect the current flake to be at
-            # `flakePath` and use that path to pass to `darwin-rebuild`
-            # which means you only need to run `darwin-refresh` to rebuild
+            # `flakePath` and use that path to pass to rebuild command
+            # which means you only need to run `system-refresh` to rebuild
             systemRefresh.enable = true;
             systemRefresh.flakePath = "~/Projects/local-flakes";
             # We are inheriting from `flakes` so we want to refresh
@@ -72,3 +72,55 @@ Now the configuration for a work laptop can remain in a separate flake and
 doesn't have to be pushed to a public repository. The `system-refresh` command
 will take care of updating the system with the latest changes in the parent
 flake and the customization flake as well.
+
+## Customizing Git Configuration
+
+The git-config feature provides default git settings. You can override or add personal git settings by adding a custom module:
+
+```nix
+{
+  flake.darwinConfigurations.MY_HOST_NAME = mkHostConfig {
+    system = "aarch64-darwin";
+    modules = [
+      flakes.darwinModules.default
+      {
+        systemRefresh.enable = true;
+        systemRefresh.flakePath = "~/Projects/local-flakes";
+      }
+      # Add your personal git settings
+      ({username, ...}: {
+        home-manager.users.${username} = {
+          programs.git.settings = {
+            user.name = "Your Name";
+            user.email = "your.email@example.com";
+            # Add any additional git config here
+          };
+        };
+      })
+    ];
+  };
+}
+```
+
+This allows you to keep personal git settings (name, email, signing keys) separate from the shared configuration.
+
+## Customizing Username
+
+You can override the username via the `specialArgs` parameter:
+
+```nix
+{
+  flake.darwinConfigurations.MY_HOST_NAME = mkHostConfig {
+    system = "aarch64-darwin";
+    specialArgs = {
+      username = "myusername";
+    };
+    modules = [
+      flakes.darwinModules.default
+      # ... other modules
+    ];
+  };
+}
+```
+
+The `username` parameter is used throughout the configuration, particularly for home-manager settings.
