@@ -41,6 +41,7 @@
     nvf.inputs.flake-compat.follows = "flake-compat";
 
     hyprland.url = "github:hyprwm/Hyprland";
+    hyprland.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
     xremap.url = "github:xremap/nix-flake";
     xremap.inputs.nixpkgs.follows = "nixpkgs-unstable";
