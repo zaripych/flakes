@@ -5,10 +5,12 @@
 }: attrs: let
   nextAttrs = builtins.removeAttrs attrs ["inputs"];
   nextInputs = builtins.removeAttrs (attrs.inputs or {}) ["self"];
+  nixpkgs = attrs.inputs.nixpkgs or inputs.nixpkgs;
+  nix-darwin = attrs.inputs.nix-darwin or inputs.nix-darwin;
 in
   if attrs.system == "x86_64-linux" || attrs.system == "aarch64-linux"
   then
-    (inputs.nixpkgs.lib.nixosSystem (nextAttrs
+    (nixpkgs.lib.nixosSystem (nextAttrs
       // {
         specialArgs =
           {
@@ -23,7 +25,7 @@ in
       }))
   else if attrs.system == "x86_64-darwin" || attrs.system == "aarch64-darwin"
   then
-    (inputs.nix-darwin.lib.darwinSystem (nextAttrs
+    (nix-darwin.lib.darwinSystem (nextAttrs
       // {
         specialArgs =
           {

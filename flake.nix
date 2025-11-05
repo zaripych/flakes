@@ -9,6 +9,7 @@
 
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixpkgs-unstable";
     nixpkgs-unstable.url = "github:nixos/nixpkgs?ref=nixpkgs-unstable";
+    nixpkgs-stable.url = "github:nixos/nixpkgs?ref=nixos-25.05";
 
     nix-darwin.url = "github:nix-darwin/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
@@ -81,11 +82,64 @@
           flake.darwinModules.default = ./macos/module.nix;
           flake.nixosModules.default = ./linux/module.nix;
 
+          flake.darwinConfigurations.default = lib.mkHostConfig {
+            system = "aarch64-darwin";
+            modules = [
+              ./macos/module.nix
+            ];
+          };
+
           flake.nixosConfigurations.default = lib.mkHostConfig {
             system = "x86_64-linux";
+            inputs.nixpkgs = inputs.nixpkgs-stable;
+            specialArgs = {
+              username = "test-user";
+            };
             modules = [
               ./linux/module.nix
+              ({lib, ...}: {
+                # CI/VM testing configuration adapted from tlaternet-server
+                system.stateVersion = "25.05";
+
+                # Define a test user
+                users.users.test-user = {
+                  isNormalUser = true;
+                  home = "/home/test-user";
+                  password = "insecure";
+                };
+
+                # Disable graphical tty so -curses works
+                boot.kernelParams = ["nomodeset"];
+
+                networking.hostName = "test-vm";
+
+                virtualisation.vmVariant = {
+                  virtualisation = {
+                    memorySize = 2048;
+                    cores = 2;
+                    graphics = false;
+                  };
+                };
+              })
             ];
+          };
+        }
+
+        {
+          perSystem = {system, ...}: let
+            vm = inputs.self.nixosConfigurations.default;
+          in {
+            packages.vm = vm.config.system.build.vm;
+
+            apps.run-vm = {
+              type = "app";
+              program = let
+                pkgs = inputs.nixpkgs.legacyPackages.${system};
+              in
+                (pkgs.writeShellScript "run-vm" ''
+                  ${vm.config.system.build.vm}/bin/run-test-vm-vm
+                '').outPath;
+            };
           };
         }
       ];
