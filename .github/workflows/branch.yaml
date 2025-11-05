@@ -10,7 +10,7 @@ on:
 
 jobs:
   build-macos:
-    timeout-minutes: 15
+    timeout-minutes: 30 
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
@@ -36,22 +36,29 @@ jobs:
           # except the version with the `primary-key`, if it exists
           purge-primary-key: never
 
-      - name: Check Minimal Nix Flake
-        run: nix develop ./macos --command sudo darwin-rebuild check --flake ./macos#minimal
+      - name: Build macOS Configuration
+        run: nix build .#darwinConfigurations.default.system
 
-      - name: Build Minimal Nix Flake
-        run: nix develop ./macos --command darwin-rebuild build --flake ./macos#minimal
+  build-linux:
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
 
-      - name: Check Default Nix Flake
-        run: nix develop ./macos --command sudo darwin-rebuild check --flake ./macos#default
+      - name: Install Nix
+        uses: cachix/install-nix-action@v30
+        with:
+          extra_nix_config: |
+            access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build Default Nix Flake
-        run: nix develop ./macos --command darwin-rebuild build --flake ./macos#default
+      - name: Restore and save Nix store
+        uses: nix-community/cache-nix-action@v5
+        with:
+          primary-key: build-${{ runner.os }}-${{ hashFiles('**/flake.nix', '**/flake.lock') }}
+          purge: true
+          purge-prefixes: build-${{ runner.os }}-
+          purge-created: 0
+          purge-primary-key: never
 
-      - name: Switch to Nix Flake
-        run: |
-          sudo mv /etc/nix/nix.conf /etc/nix/nix.conf.before-nix-darwin
-
-          nix --extra-experimental-features 'nix-command flakes' \
-            develop ./macos --command sudo darwin-rebuild \
-            switch --flake ./macos#minimal
+      - name: Build NixOS VM
+        run: nix build .#vm
