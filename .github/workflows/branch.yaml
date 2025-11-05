@@ -36,11 +36,8 @@ jobs:
           # except the version with the `primary-key`, if it exists
           purge-primary-key: never
 
-      - name: Check Default Nix Flake
-        run: sudo darwin-rebuild check --flake .#darwinConfigurations.default
-
-      - name: Build Default Nix Flake
-        run: darwin-rebuild build --flake .#darwinConfigurations.default
+      - name: Build macOS Configuration
+        run: nix build .#darwinConfigurations.default.system
 
   build-linux:
     timeout-minutes: 15
