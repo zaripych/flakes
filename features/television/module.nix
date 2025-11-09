@@ -12,7 +12,13 @@
     programs.television = {
       enable = true;
 
-      package = (import inputs.nixpkgs-unstable {system = pkgs.system;}).television;
+      package = let
+        nixpkgs =
+          if inputs.nixpkgs.sourceInfo == inputs.nixpkgs-unstable.sourceInfo
+          then pkgs
+          else (import inputs.nixpkgs-unstable {system = pkgs.system;});
+      in
+        nixpkgs.television;
 
       enableBashIntegration = true;
       enableZshIntegration = true;

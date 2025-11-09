@@ -5,7 +5,6 @@
     ../features/system-refresh/module.nix
 
     ./features/iterm/module.nix
-
     ../features/nix/module.nix
     inputs.self.darwinModules.zsh
     ../features/nvim/module.nix
@@ -30,5 +29,8 @@
     ../features/1password-gui/module.nix
     ../features/docker-desktop/module.nix
     ../features/trace-packages/module.nix
+    ../features/television/module.nix
+    ./features/yabai/module.nix
+    ./features/key-remapping/module.nix
   ];
 }
