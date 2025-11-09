@@ -3,3 +3,4 @@ node_modules
 result
 scripts/synchronize.sh
 .claude
+.vscode
