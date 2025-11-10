@@ -25,9 +25,24 @@
       ];
       theme = "fino";
     };
+
+    interactiveShellInit = ''
+      # History configuration
+      HISTSIZE=10000
+      SAVEHIST=10000
+      HISTFILE="$HOME/.zsh_history"
+
+      # Don't record duplicate commands in history
+      setopt HIST_IGNORE_DUPS       # Don't record an event that was just recorded again
+      setopt HIST_IGNORE_ALL_DUPS   # Delete old recorded entry if new entry is a duplicate
+      setopt HIST_FIND_NO_DUPS      # Do not display duplicates when searching
+      setopt HIST_SAVE_NO_DUPS      # Don't write duplicate entries in the history file
+      setopt SHARE_HISTORY          # Share history between all sessions
+    '';
   };
 
   environment.systemPackages = [
     pkgs.chroma
+    pkgs.fzf
   ];
 }

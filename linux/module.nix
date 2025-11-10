@@ -29,5 +29,7 @@
     ../features/television/module.nix
 
     inputs.self.nixosModules.zsh
+    ../features/bash/nixos.module.nix
+    ../features/atuin/module.nix
   ];
 }
