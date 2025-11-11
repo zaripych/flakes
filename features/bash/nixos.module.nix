@@ -1,6 +1,6 @@
 {...}: {
   programs.bash = {
-    enableCompletion = true;
+    completion.enable = true;
 
     interactiveShellInit = ''
       # Don't store duplicate commands in history
