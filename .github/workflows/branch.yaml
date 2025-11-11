@@ -10,7 +10,7 @@ on:
 
 jobs:
   build-macos:
-    timeout-minutes: 30 
+    timeout-minutes: 30
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
@@ -37,7 +37,7 @@ jobs:
           purge-primary-key: never
 
       - name: Build macOS Configuration
-        run: nix build .#darwinConfigurations.default.system
+        run: nix build ./macos#darwinConfigurations.default.system
 
   build-linux:
     timeout-minutes: 30
