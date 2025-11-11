@@ -13,8 +13,6 @@
     ../features/git-config/module.nix
     ../features/powerline-fonts/module.nix
 
-    ../features/fix-app-symlinks/module.nix
-
     ../features/enable-sudo-touch/module.nix
     ../features/mouse-and-trackpad/module.nix
 

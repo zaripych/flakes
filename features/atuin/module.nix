@@ -1,11 +1,11 @@
-{ pkgs, ... }: {
-  environment.systemPackages = [ pkgs.atuin ];
+{pkgs, ...}: {
+  environment.systemPackages = [pkgs.atuin];
 
   programs.zsh.interactiveShellInit = ''
-    eval "$(atuin init zsh)"
+    eval "$(atuin init zsh --disable-up-arrow)"
   '';
 
   programs.bash.interactiveShellInit = ''
-    eval "$(atuin init bash)"
+    eval "$(atuin init bash --disable-up-arrow)"
   '';
 }

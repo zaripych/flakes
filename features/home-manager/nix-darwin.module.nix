@@ -13,10 +13,6 @@
     useGlobalPkgs = true;
     useUserPackages = true;
 
-    sharedModules = [
-      inputs.mac-app-utils.homeManagerModules.default
-    ];
-
     users.${username} = {
       home.username = username;
       home.stateVersion = "25.05";
