@@ -13,27 +13,22 @@ jobs:
     timeout-minutes: 30
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Install Nix
-        uses: cachix/install-nix-action@v30
+        uses: cachix/install-nix-action@v34
         with:
           extra_nix_config: |
             access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
 
       - name: Restore and save Nix store
-        uses: nix-community/cache-nix-action@v5
+        uses: nix-community/cache-nix-action@v6
         with:
-          primary-key: build-${{ runner.os }}-${{ hashFiles('**/flake.nix', '**/flake.lock') }}
-          # paths: |
-          #   ~/.npm
-          # do purge caches
+          primary-key: build-${{ runner.os }}-${{ github.base_ref || github.ref_name }}-${{ hashFiles('**/flake.nix', '**/flake.lock') }}
+          restore-prefixes-first-match: build-${{ runner.os }}-${{ github.base_ref || github.ref_name }}-
           purge: true
-          # purge all versions of the cache
           purge-prefixes: build-${{ runner.os }}-
-          # created more than 0 seconds ago relative to the start of the `Post Restore` phase
           purge-created: 0
-          # except the version with the `primary-key`, if it exists
           purge-primary-key: never
 
       - name: Build macOS Configuration
@@ -43,20 +38,21 @@ jobs:
     timeout-minutes: 30
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Install Nix
-        uses: cachix/install-nix-action@v30
+        uses: cachix/install-nix-action@v34
         with:
           extra_nix_config: |
             access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
 
       - name: Restore and save Nix store
-        uses: nix-community/cache-nix-action@v5
+        uses: nix-community/cache-nix-action@v6
         with:
-          primary-key: build-${{ runner.os }}-${{ hashFiles('**/flake.nix', '**/flake.lock') }}
+          primary-key: build-${{ runner.os }}-${{ github.base_ref || github.ref_name }}-${{ hashFiles('**/flake.nix', '**/flake.lock') }}
+          restore-prefixes-first-match: build-${{ runner.os }}-${{ github.base_ref || github.ref_name }}-
           purge: true
-          purge-prefixes: build-${{ runner.os }}-
+          purge-prefixes: build-${{ runner.os }}-${{ github.base_ref || github.ref_name }}-
           purge-created: 0
           purge-primary-key: never
 
