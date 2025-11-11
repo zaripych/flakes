@@ -57,4 +57,4 @@ jobs:
           purge-primary-key: never
 
       - name: Build NixOS VM
-        run: nix build .#vm
+        run: nix build ./linux#vm
