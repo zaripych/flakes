@@ -15,7 +15,7 @@
 
   programs.fzf = {
     fuzzyCompletion = true;
-    keybindings = true;
+    # keybindings = true;
   };
 
   environment.systemPackages = [

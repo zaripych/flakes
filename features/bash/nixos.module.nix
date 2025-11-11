@@ -1,9 +1,9 @@
-{ ... }: {
+{...}: {
   programs.bash = {
     enable = true;
     enableCompletion = true;
 
-    initExtra = ''
+    interactiveShellInit = ''
       # Don't store duplicate commands in history
       export HISTCONTROL=ignoredups:erasedups
       export HISTSIZE=10000

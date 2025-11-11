@@ -14,8 +14,8 @@
 
     # These options are under programs.fzf on linux, so it's separate module
     enableFzfCompletion = true;
-    enableFzfGit = true;
-    enableFzfHistory = true;
+    # enableFzfGit = true;
+    # enableFzfHistory = true;
 
     ohMyZsh = {
       enable = true;
