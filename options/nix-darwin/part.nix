@@ -30,8 +30,6 @@ in {
         example = literalExpression ''
           {
             my-machine = inputs.nix-darwin.lib.darwinSystem {
-              # system is not needed with freshly generated hardware-configuration.nix
-              # system = "x86_64-darwin";
               modules = [
 
               ];

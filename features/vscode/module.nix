@@ -164,12 +164,12 @@ in {
             # pkgs.vscode-extensions.github.copilot-chat
             vscode-extensions.github.vscode-github-actions
 
-            vscode-extensions.zhuangtongfa.material-theme # One Dark Pro
-            vscode-extensions.pkief.material-icon-theme
-
             vscode-extensions.bodil.file-browser
             vscode-extensions.rodrigocfd.format-comment
             vscode-extensions.eamodio.gitlens
+
+            vscode-extensions.catppuccin.catppuccin-vsc-icons
+            vscode-extensions.lakshits11.best-themes-redefined
           ];
 
           js-ts-extensions = [
@@ -178,6 +178,7 @@ in {
             vscode-extensions.yoavbls.pretty-ts-errors
             vscode-extensions.wallabyjs.quokka-vscode
             vscode-extensions.wallabyjs.wallaby-vscode
+            vscode-extensions.wallabyjs.console-ninja
           ];
 
           python-extensions = [

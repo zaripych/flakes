@@ -8,7 +8,7 @@
     packages = [
       {
         src = ../npm-packages;
-        hash = "sha256-rbgE0r+DDVBCX8rhDh/9GWl6hyM8vC91/crJqRil11M=";
+        hash = "sha256-RzPwgsS8GC3T7WzmGQGTNzlV8eIyI5RjstN6Us/FV+w=";
       }
     ];
   };

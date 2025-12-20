@@ -30,7 +30,7 @@ with lib; {
   config.system.build.syncedApps = pkgs.buildEnv {
     name = "synced-applications";
     paths = config.environment.syncedApps;
-    pathsToLink = "/Applications";
+    pathsToLink = ["/Applications"];
   };
 
   config.system.activationScripts.extraActivation.text = lib.mkForce ''

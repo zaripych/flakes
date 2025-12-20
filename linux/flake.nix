@@ -70,7 +70,7 @@
           flake.nixosModules.default = ./module.nix;
 
           flake.nixosConfigurations.default = lib.mkHostConfig {
-            system = "x86_64-linux";
+            modulesPlatform = "x86_64-linux";
             specialArgs = {
               username = "test-user";
             };

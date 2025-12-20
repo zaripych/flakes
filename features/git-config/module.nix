@@ -23,7 +23,7 @@
         push.autoSetupRemote = true;
         merge.conflictStyle = "diff3";
         core.editor = "nvim";
-        credential.helper = lib.optionalString (pkgs.system == "aarch64-darwin") "osxkeychain";
+        credential.helper = lib.optionalString pkgs.stdenv.hostPlatform.isDarwin "osxkeychain";
       };
     };
   };

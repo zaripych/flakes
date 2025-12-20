@@ -1,11 +1,11 @@
-{system, ...}: {
+{modulesPlatform, ...}: {
   imports = let
     module =
-      if system == "x86_64-linux" || system == "aarch64-linux"
+      if modulesPlatform == "x86_64-linux" || modulesPlatform == "aarch64-linux"
       then ./nixos.module.nix
-      else if system == "x86_64-darwin" || system == "aarch64-darwin"
+      else if modulesPlatform == "x86_64-darwin" || modulesPlatform == "aarch64-darwin"
       then ./nix-darwin.module.nix
-      else throw "Unsupported system: ${system}";
+      else throw "Unsupported system: ${modulesPlatform}";
   in [
     module
   ];

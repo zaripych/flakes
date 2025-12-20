@@ -60,12 +60,13 @@
 
         ../features/nvim/part.nix
         ../features/zsh/part.nix
+        ./features/skhd/part.nix
 
         {
           flake.darwinModules.default = ./module.nix;
 
           flake.darwinConfigurations.default = lib.mkHostConfig {
-            system = "aarch64-darwin";
+            modulesPlatform = "aarch64-darwin";
             modules = [
               ./module.nix
             ];

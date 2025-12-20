@@ -1,5 +1,6 @@
 {inputs, ...}: {
   imports = [
+    ../features/out-of-store-links/module.nix
     ../features/nix-darwin/module.nix
 
     ../features/system-refresh/module.nix
@@ -30,7 +31,11 @@
     ../features/docker-desktop/module.nix
     ../features/trace-packages/module.nix
     ../features/television/module.nix
+    ./features/leader-key/module.nix
+
+    # Services
     ./features/yabai/module.nix
-    ./features/key-remapping/module.nix
+    ./features/skhd/module.nix
+    ./features/sketchybar/module.nix
   ];
 }

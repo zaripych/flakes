@@ -1,7 +1,4 @@
-{ pkgs
-, ...
-}: {
-
+{pkgs, ...}: {
   fonts = {
     packages = [
       pkgs.nerd-fonts.noto
@@ -9,6 +6,7 @@
       pkgs.nerd-fonts.roboto-mono
       pkgs.nerd-fonts.profont
       pkgs.nerd-fonts.fira-code
+      pkgs.nerd-fonts.jetbrains-mono
     ];
   };
 }

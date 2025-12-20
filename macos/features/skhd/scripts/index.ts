@@ -47,17 +47,28 @@ interface YabaiWindow {
 }
 
 /**
- * Executes a yabai command and parses the JSON output
- * @param args - Arguments to pass to yabai (e.g., ["-m", "query", "--windows"])
- * @returns Parsed JSON output from yabai
+ * Executes a yabai command without expecting JSON output
+ * @param args - Arguments to pass to yabai (e.g., ["-m", "window", "--focus", "west"])
  */
-export async function queryYabai<T = unknown>(args: string[]): Promise<T> {
+async function execYabai(args: string[]): Promise<void> {
   try {
-    const { stdout } = await execFileAsync("yabai", args);
-    return JSON.parse(stdout) as T;
+    const { stdout, stderr } = await execFileAsync("yabai", args);
+    if (stdout) {
+      console.log(stdout);
+    }
+    if (stderr) {
+      console.error(stderr);
+    }
   } catch (error) {
+    const { stdout, stderr } = error as { stdout?: string; stderr?: string };
+    if (stdout) {
+      console.log(stdout);
+    }
+    if (stderr) {
+      console.error(stderr);
+    }
     throw new Error(
-      `Failed to query yabai: ${
+      `Failed to execute yabai command: ${
         error instanceof Error ? error.message : String(error)
       }`
     );
@@ -65,15 +76,30 @@ export async function queryYabai<T = unknown>(args: string[]): Promise<T> {
 }
 
 /**
- * Executes a yabai command without expecting JSON output
- * @param args - Arguments to pass to yabai (e.g., ["-m", "window", "--focus", "west"])
+ * Executes a yabai command and parses the JSON output
+ * @param args - Arguments to pass to yabai (e.g., ["-m", "query", "--windows"])
+ * @returns Parsed JSON output from yabai
  */
-async function execYabai(args: string[]): Promise<void> {
+export async function queryYabai<T = unknown>(args: string[]): Promise<T> {
   try {
-    await execFileAsync("yabai", args);
+    const { stdout, stderr } = await execFileAsync("yabai", args);
+    if (stdout) {
+      console.log(stdout);
+    }
+    if (stderr) {
+      console.error(stderr);
+    }
+    return JSON.parse(stdout) as T;
   } catch (error) {
+    const { stdout, stderr } = error as { stdout?: string; stderr?: string };
+    if (stdout) {
+      console.log(stdout);
+    }
+    if (stderr) {
+      console.error(stderr);
+    }
     throw new Error(
-      `Failed to execute yabai command: ${
+      `Failed to query yabai: ${
         error instanceof Error ? error.message : String(error)
       }`
     );
@@ -186,7 +212,7 @@ export async function focusLeft(): Promise<void> {
     if (sorted[0]?.["has-focus"]) {
       await focusPrevSpace();
     } else {
-      await focusLeftWindow();
+      await focusLeftWindow().catch(focusPrevSpace);
     }
   } else {
     await focusPrevSpace();
@@ -200,7 +226,7 @@ export async function focusRight(): Promise<void> {
     if (sorted[0]?.["has-focus"]) {
       await focusNextSpace();
     } else {
-      await focusRightWindow();
+      await focusRightWindow().catch(focusNextSpace);
     }
   } else {
     await focusNextSpace();

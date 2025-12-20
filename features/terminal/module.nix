@@ -4,19 +4,22 @@
       enable = true;
 
       settings = {
+        font_name = "Fira Code";
         font_size = 14.0;
         macos_option_as_alt = "left";
-        editor = "nvim";  # or "vim", "nano", etc.
+        editor = "nvim"; # or "vim", "nano", etc.
         confirm_os_window_close = 0;
       };
 
+      themeFile = "Catppuccin-Mocha";
+
       keybindings = {
         # Word-based cursor movement
-        "alt+left" = "send_text all \\x1b\\x62";  # Move backward by word (ESC+b)
+        "alt+left" = "send_text all \\x1b\\x62"; # Move backward by word (ESC+b)
         "alt+right" = "send_text all \\x1b\\x66"; # Move forward by word (ESC+f)
 
         # Home/End behavior
-        "cmd+left" = "send_text all \\x01";  # Move to beginning of line (Ctrl+A)
+        "cmd+left" = "send_text all \\x01"; # Move to beginning of line (Ctrl+A)
         "cmd+right" = "send_text all \\x05"; # Move to end of line (Ctrl+E)
 
         # Word deletion

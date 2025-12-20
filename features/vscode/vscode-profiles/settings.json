@@ -121,13 +121,15 @@
     "terminal.findMatchHighlightBorder": "#ffffff",
     "terminal.selectionForeground": "#ffcf60"
   },
-  "workbench.colorTheme": "One Dark Pro",
   "workbench.editor.revealIfOpen": false,
   "workbench.editorAssociations": {
     "*.copilotmd": "vscode.markdown.preview.editor",
     "*.png": "editor.excalidraw",
     "git-rebase-todo": "default"
   },
-  "workbench.iconTheme": "material-icon-theme",
-  "zenMode.hideLineNumbers": false
+  "zenMode.fullScreen": false,
+  "zenMode.hideLineNumbers": false,
+  "workbench.colorTheme": "Best Themes - One Dark Pro No Italic",
+  "editor.semanticHighlighting.enabled": false,
+  "workbench.iconTheme": "catppuccin-mocha"
 }
