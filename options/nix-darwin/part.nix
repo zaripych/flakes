@@ -14,6 +14,20 @@
     mkSubmoduleOptions
     ;
 in {
+  config.perSystem = {
+    pkgs,
+    inputs',
+    ...
+  }: {
+    devShells.default = pkgs.mkShell {
+      packages = [
+        inputs'.nix-darwin.packages.darwin-rebuild
+        inputs'.nix-darwin.packages.darwin-option
+        inputs'.nix-darwin.packages.darwin-version
+      ];
+    };
+  };
+
   options = {
     flake = mkSubmoduleOptions {
       darwinConfigurations = mkOption {
