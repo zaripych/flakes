@@ -1,8 +1,4 @@
-{
-  lib,
-  username,
-  ...
-}: {
+{username, ...}: {
   services.yabai = {
     enable = true;
     enableScriptingAddition = true;
@@ -23,7 +19,6 @@
       left_padding = 6;
       right_padding = 6;
       window_gap = 6;
-      external_bar = "all:35:0";
       debug_output = "on";
     };
 
@@ -48,7 +43,10 @@
       setup_space 2 "Code" stack
       setup_space 3 "Kitty" bsp
       setup_space 4 "Comms" stack
-      setup_space 5 "Other"
+      setup_space 5 "Other" stack
+
+      # Default space
+      yabai -m rule --add app=".*" space=^Other
 
       # Assign apps to spaces
       yabai -m rule --add app="^(Safari|(Google Chrome))$" space=^Browser
@@ -61,6 +59,8 @@
       yabai -m rule --add app="^System Preferences$" manage=off
       yabai -m rule --add app="^System Settings$" manage=off
       yabai -m rule --add app="^Disk Utility$" manage=off
+      yabai -m rule --add title="^(Minecraft.*)$" manage=off
+      yabai -m rule --add app="^Leader Key$" manage=off sticky=on
 
       # Create scratchpad spaces
       yabai -m rule --add app="^kitty$" title="^scratch-terminal$" scratchpad=terminal grid=11:11:1:1:9:9
@@ -70,15 +70,6 @@
         open -n -a /etc/profiles/per-user/${username}/bin/kitty --args -1 --working-directory=$HOME;
       fi
 
-      # Refresh sketchybar on space change or app focus change
-      yabai -m signal --add event=display_added action="/etc/profiles/per-user/${username}/bin/sketchybar --update"
-      yabai -m signal --add event=display_removed action="/etc/profiles/per-user/${username}/bin/sketchybar --update"
-      yabai -m signal --add event=display_moved action="/etc/profiles/per-user/${username}/bin/sketchybar --update"
-      yabai -m signal --add event=display_resized action="/etc/profiles/per-user/${username}/bin/sketchybar --update"
-      yabai -m signal --add event=display_changed action="/etc/profiles/per-user/${username}/bin/sketchybar --update"
-      # yabai -m signal --add event=space_destroyed action="/etc/profiles/per-user/${username}/bin/sketchybar --update"
-      # yabai -m signal --add event=space_created action="/etc/profiles/per-user/${username}/bin/sketchybar --update"
-
       # Automatically hide unfocused scratchpads
       yabai -m signal --add event=application_front_switched action="cat <(yabai -m query --windows --space | jq -r 'map(select(.[\"is-visible\"] == true and .[\"has-focus\"] == false and .scratchpad != \"\") | .scratchpad)[]') | xargs yabai -m window --toggle"
 
@@ -86,6 +77,8 @@
       if [ -f /Users/${username}/.yabairc ]; then
         /Users/${username}/.yabairc
       fi
+
+      yabai -m rule --apply
 
       echo "$(date "+%Y-%m-%d %H:%M:%s") - yabai configuration loaded..."
     '';

@@ -18,7 +18,7 @@
         conflictStrategy = linkSpec.conflictStrategy or "backup-and-overwrite-target";
       })
       config.outOfStoreLinks.links;
-    data = builtins.trace (builtins.toJSON links) (builtins.toJSON links);
+    data = builtins.toJSON links;
   in {
     home-manager.users."${username}".home.activation.createOutOfStoreLinks = inputs.home-manager.lib.hm.dag.entryAfter ["linkGeneration"] ''
       data='${data}';

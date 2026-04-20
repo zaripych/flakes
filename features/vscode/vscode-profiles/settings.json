@@ -15,7 +15,7 @@
     "editor.wordWrap": "wordWrapColumn"
   },
   "[python]": {
-    "editor.defaultFormatter": "ms-python.black-formatter",
+    "editor.defaultFormatter": "charliermarsh.ruff",
     "editor.formatOnType": true
   },
   "[shellscript]": {
@@ -27,7 +27,6 @@
   "[typescriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "copy-breadcrumbs.pasteToTerminal": false,
   "diffEditor.ignoreTrimWhitespace": false,
   "diffEditor.renderSideBySide": true,
   "editor.accessibilitySupport": "off",
@@ -43,10 +42,12 @@
   "editor.gotoLocation.multipleTypeDefinitions": "goto",
   "editor.guides.bracketPairs": true,
   "editor.inlineSuggest.enabled": true,
+  "editor.semanticHighlighting.enabled": false,
   "editor.stickyScroll.enabled": true,
   "editor.tokenColorCustomizations": {},
   "excalidraw.theme": "dark",
   "explorer.fileNesting.enabled": true,
+  "extensions.autoCheckUpdates": false,
   "github.copilot.enable": {
     "*": true,
     "markdown": true,
@@ -54,7 +55,6 @@
     "scminput": false,
     "yaml": true
   },
-  "gitlens.codeLens.enabled": false,
   "javascript.preferences.importModuleSpecifier": "relative",
   "javascript.updateImportsOnFileMove.enabled": "always",
   "magit.display-buffer-function": "same-column",
@@ -70,6 +70,8 @@
       }
     }
   },
+  "notebook.defaultFormatter": "charliermarsh.ruff",
+  "notebook.formatOnSave.enabled": true,
   "python.terminal.activateEnvInCurrentTerminal": true,
   "python.terminal.activateEnvironment": false,
   "remote.autoForwardPortsSource": "hybrid",
@@ -78,6 +80,7 @@
   "terminal.integrated.stickyScroll.enabled": false,
   "typescript.preferences.importModuleSpecifier": "relative",
   "typescript.updateImportsOnFileMove.enabled": "always",
+  "update.mode": "manual",
   "vim.easymotion": true,
   "vim.normalModeKeyBindingsNonRecursive": [
     {
@@ -121,15 +124,13 @@
     "terminal.findMatchHighlightBorder": "#ffffff",
     "terminal.selectionForeground": "#ffcf60"
   },
+  "workbench.colorTheme": "Best Themes - One Dark Pro No Italic",
   "workbench.editor.revealIfOpen": false,
   "workbench.editorAssociations": {
     "*.copilotmd": "vscode.markdown.preview.editor",
-    "*.png": "editor.excalidraw",
     "git-rebase-todo": "default"
   },
+  "workbench.iconTheme": "catppuccin-mocha",
   "zenMode.fullScreen": false,
-  "zenMode.hideLineNumbers": false,
-  "workbench.colorTheme": "Best Themes - One Dark Pro No Italic",
-  "editor.semanticHighlighting.enabled": false,
-  "workbench.iconTheme": "catppuccin-mocha"
+  "zenMode.hideLineNumbers": false
 }

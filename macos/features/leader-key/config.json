@@ -47,18 +47,6 @@
       ],
       "key": "r",
       "type": "group"
-    },
-    {
-      "actions": [
-        {
-          "key": "r",
-          "type": "command",
-          "value": "sketchybar --reload"
-        }
-      ],
-      "key": "s",
-      "label": "Sketchybar",
-      "type": "group"
     }
   ],
   "type": "group"

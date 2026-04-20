@@ -31,11 +31,11 @@
     ../features/docker-desktop/module.nix
     ../features/trace-packages/module.nix
     ../features/television/module.nix
+    ../features/python/module.nix
     ./features/leader-key/module.nix
 
     # Services
     ./features/yabai/module.nix
     ./features/skhd/module.nix
-    ./features/sketchybar/module.nix
   ];
 }

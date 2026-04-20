@@ -9,6 +9,10 @@
         macos_option_as_alt = "left";
         editor = "nvim"; # or "vim", "nano", etc.
         confirm_os_window_close = 0;
+
+        scrollback_lines = 100000;
+        scrollback_pager_history_size = 100; # MB of additional history stored on disk
+        scrollback_pager = "nvim -c 'let f=tempname() | silent execute \"write! \" . f | silent execute \"te cat \" . f' -c 'nnoremap q :qa!<CR>' -";
       };
 
       themeFile = "Catppuccin-Mocha";
@@ -24,6 +28,9 @@
 
         # Word deletion
         "alt+backspace" = "send_text all \\x17"; # Delete word backward (Ctrl+W)
+
+        # Search scrollback
+        "cmd+f" = "show_scrollback";
       };
     };
   };

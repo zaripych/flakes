@@ -4,5 +4,6 @@
     ripgrep
     jq
     _1password-cli
+    tmux
   ];
 }

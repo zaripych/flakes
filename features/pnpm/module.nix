@@ -1,6 +1,7 @@
 {pkgs, ...}: {
   environment.systemPackages = with pkgs; [
     nodePackages.pnpm
+    bun
   ];
 
   # Allow pnpm to install to the home directory

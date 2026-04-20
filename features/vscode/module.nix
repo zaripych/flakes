@@ -183,7 +183,6 @@ in {
 
           python-extensions = [
             vscode-extensions.ms-python.python
-            vscode-extensions.ms-python.black-formatter
             vscode-extensions.charliermarsh.ruff
           ];
 
