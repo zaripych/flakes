@@ -26,12 +26,12 @@
 
       # -- refresh config
       cmd + alt + ctrl - r : yabai -m window --toggle system-refresh-terminal || { \
-        open -n -a /etc/profiles/per-user/rz/bin/kitty --args -1 --working-directory="$HOME" --hold system-refresh switch \
+        open -n -a /etc/profiles/per-user/${username}/bin/kitty --args -1 --working-directory="$HOME" --hold system-refresh switch \
       }
 
       # -- toggling scratchpads
       cmd + ctrl - t : yabai -m window --toggle terminal || { \
-        open -n -a /etc/profiles/per-user/rz/bin/kitty --args -1 -T scratch-terminal --instance-group=scratch-terminal --working-directory="$HOME" \
+        open -n -a /etc/profiles/per-user/${username}/bin/kitty --args -1 -T scratch-terminal --instance-group=scratch-terminal --working-directory="$HOME" \
       }
 
       # SPACES AND WINDOWS NAVIGATION

@@ -2,7 +2,7 @@
   description = "A nix-darwin configuration flake for my personal laptops";
 
   inputs = {
-    flakes.url = "path:/Users/rz/Projects/flakes?dir=macos";
+    flakes.url = "path:/Users/YOUR_USERNAME/Projects/flakes?dir=macos";
   };
 
   outputs = inputs @ {
