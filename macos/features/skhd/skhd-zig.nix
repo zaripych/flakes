@@ -7,12 +7,12 @@
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "skhd-zig";
-  version = "0.0.15";
+  version = "0.0.17";
 
   src = fetchFromGitHub {
     owner = "jackielii";
     repo = "skhd.zig";
-    rev = "v0.0.15";
+    rev = "v0.0.17";
     hash = "sha256-h3r0/y3EBFAAJ/FA5vH3f0HJq/82BhGP2k/YErVP93s="; # placeholder
   };
 

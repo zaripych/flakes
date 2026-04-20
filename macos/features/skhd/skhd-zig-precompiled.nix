@@ -6,11 +6,11 @@
 }:
 stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "skhd-zig";
-  version = "0.0.15";
+  version = "0.0.17";
 
   src = fetchurl {
     url = "https://github.com/jackielii/skhd.zig/releases/download/v${finalAttrs.version}/skhd-arm64-macos.tar.gz";
-    hash = "sha256-O9GjWiVySNsvL+N+0i5MGv/SI2FW7wbC2+Yw4WxYi0c=";
+    hash = "sha256-1lvvQoUOCxpus07L5KsG1l30GI+LP+KkvLGQN12KFhs=";
   };
 
   sourceRoot = ".";
