@@ -32,10 +32,18 @@
     ../features/trace-packages/module.nix
     ../features/television/module.nix
     ../features/python/module.nix
-    ./features/leader-key/module.nix
 
+    ./features/leader-key/module.nix
     # Services
-    ./features/yabai/module.nix
-    ./features/skhd/module.nix
+    # After commenting out a launchd-backed service below, nix-darwin does
+    # not prune its plist from ~/Library/LaunchAgents on activation, so the
+    # agent keeps auto-starting on reboot. To retire one:
+    #   launchctl bootout gui/$(id -u)/org.nixos.<name>
+    #   rm ~/Library/LaunchAgents/org.nixos.<name>.plist
+    #   system-refresh switch
+    # ./features/yabai/module.nix
+    # ./features/skhd/module.nix
+    ./features/aerospace/module.nix
+    ./features/aerospace-swipe/module.nix
   ];
 }
