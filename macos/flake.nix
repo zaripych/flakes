@@ -69,6 +69,17 @@
           flake.darwinConfigurations.default = lib.mkHostConfig {
             modulesPlatform = "aarch64-darwin";
             modules = [
+              {
+                nixpkgs.hostPlatform = "aarch64-darwin";
+              }
+              # {
+              #   outOfStoreLinks = {
+              #     enable = true;
+              #     sourceLocations = {
+              #       "${inputs.flakes.sourceInfo.narHash}" = "/Users/USERNAME/Projects/flakes";
+              #     };
+              #   };
+              # }
               ./module.nix
             ];
           };

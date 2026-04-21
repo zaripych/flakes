@@ -32,7 +32,7 @@
             outOfStoreLinks = {
               enable = true;
               sourceLocations = {
-                "${inputs.flakes.sourceInfo.narHash}" = "~/Projects/flakes";
+                "${inputs.flakes.sourceInfo.narHash}" = "/Users/YOUR_USERNAME/Projects/flakes";
               };
             };
           }
