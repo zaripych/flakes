@@ -46,4 +46,10 @@
     ./features/aerospace/module.nix
     ./features/aerospace-swipe/module.nix
   ];
+
+  services.aerospace-swipe.settings = {
+    fingers = 4;
+    natural_swipe = true;
+    swipe_tolerance = 2;
+  };
 }
