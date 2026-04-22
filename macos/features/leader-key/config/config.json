@@ -6,63 +6,6 @@
       "value": "/System/Applications/Utilities/Terminal.app"
     },
     {
-      "actions": [],
-      "key": "o",
-      "type": "group"
-    },
-    {
-      "actions": [],
-      "key": "r",
-      "type": "group"
-    },
-    {
-      "key": "1",
-      "type": "command",
-      "value": "aerospace workspace 1"
-    },
-    {
-      "key": "2",
-      "type": "command",
-      "value": "aerospace workspace 2"
-    },
-    {
-      "key": "3",
-      "type": "command",
-      "value": "aerospace workspace 3"
-    },
-    {
-      "key": "4",
-      "type": "command",
-      "value": "aerospace workspace 4"
-    },
-    {
-      "key": "5",
-      "type": "command",
-      "value": "aerospace workspace 5"
-    },
-    {
-      "key": "6",
-      "type": "command",
-      "value": "aerospace workspace 6"
-    },
-    {
-      "key": "7",
-      "type": "command",
-      "value": "aerospace workspace 7"
-    },
-    {
-      "key": "8",
-      "type": "command",
-      "value": "aerospace workspace 8"
-    },
-    {
-      "key": "9",
-      "type": "command",
-      "value": "aerospace workspace 9"
-    },
-    {
-      "key": "j",
-      "type": "group",
       "actions": [
         {
           "key": "left",
@@ -84,11 +27,39 @@
           "type": "command",
           "value": "aerospace join-with down"
         }
-      ]
+      ],
+      "key": "j",
+      "label": "join-with",
+      "type": "group"
     },
     {
-      "key": "m",
-      "type": "group",
+      "actions": [
+        {
+          "key": "a",
+          "type": "command",
+          "value": "aerospace layout v_accordion"
+        },
+        {
+          "key": "h",
+          "type": "command",
+          "value": "aerospace layout h_tiles"
+        },
+        {
+          "key": "v",
+          "type": "command",
+          "value": "aerospace layout v_tiles"
+        },
+        {
+          "key": "f",
+          "type": "command",
+          "value": "aerospace layout floating"
+        }
+      ],
+      "key": "l",
+      "label": "layout",
+      "type": "group"
+    },
+    {
       "actions": [
         {
           "key": "1",
@@ -135,7 +106,10 @@
           "type": "command",
           "value": "aerospace move-node-to-workspace 9"
         }
-      ]
+      ],
+      "key": "m",
+      "label": "move",
+      "type": "group"
     }
   ],
   "type": "group"
