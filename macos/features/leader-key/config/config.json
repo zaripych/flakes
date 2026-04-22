@@ -61,6 +61,32 @@
       "value": "aerospace workspace 9"
     },
     {
+      "key": "j",
+      "type": "group",
+      "actions": [
+        {
+          "key": "left",
+          "type": "command",
+          "value": "aerospace join-with left"
+        },
+        {
+          "key": "right",
+          "type": "command",
+          "value": "aerospace join-with right"
+        },
+        {
+          "key": "up",
+          "type": "command",
+          "value": "aerospace join-with up"
+        },
+        {
+          "key": "down",
+          "type": "command",
+          "value": "aerospace join-with down"
+        }
+      ]
+    },
+    {
       "key": "m",
       "type": "group",
       "actions": [
