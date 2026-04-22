@@ -1,6 +1,40 @@
 {...}: {
   services.aerospace = {
     enable = true;
+    settings.on-window-detected = [
+      {
+        "if".app-id = "com.google.Chrome";
+        run = ["move-node-to-workspace 1"];
+      }
+      {
+        "if".app-id = "com.apple.Safari";
+        run = ["move-node-to-workspace 1"];
+      }
+      {
+        "if".app-id = "com.microsoft.VSCode";
+        run = ["move-node-to-workspace 2"];
+      }
+      {
+        "if".app-id = "com.jetbrains.intellij";
+        run = ["move-node-to-workspace 2"];
+      }
+      {
+        "if".app-id = "com.apple.dt.Xcode";
+        run = ["move-node-to-workspace 2"];
+      }
+      {
+        "if".app-id = "net.kovidgoyal.kitty";
+        run = ["move-node-to-workspace 3"];
+      }
+      {
+        "if".app-id = "com.tinyspeck.slackmacgap";
+        run = ["move-node-to-workspace 4"];
+      }
+      {
+        "if".app-id = "com.apple.MobileSMS";
+        run = ["move-node-to-workspace 4"];
+      }
+    ];
     settings.mode.main.binding = {
       alt-1 = "workspace 1";
       alt-2 = "workspace 2";
@@ -21,6 +55,8 @@
       alt-shift-7 = "move-node-to-workspace 7";
       alt-shift-8 = "move-node-to-workspace 8";
       alt-shift-9 = "move-node-to-workspace 9";
+
+      alt-f = "fullscreen";
     };
   };
 }
