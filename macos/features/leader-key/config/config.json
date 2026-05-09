@@ -1,9 +1,34 @@
 {
   "actions": [
     {
+      "actions": [
+        {
+          "key": "b",
+          "type": "command",
+          "label": "build",
+          "value": "open -n -a /etc/profiles/per-user/$USER/bin/kitty --args -1  --working-directory=\"$HOME\" --hold system-refresh build"
+        },
+        {
+          "key": "s",
+          "type": "command",
+          "label": "switch",
+          "value": "open -n -a /etc/profiles/per-user/$USER/bin/kitty --args -1  --working-directory=\"$HOME\" --hold system-refresh switch"
+        }
+      ],
+      "key": "s",
+      "label": "system",
+      "type": "group"
+    },
+    {
       "key": "t",
       "type": "application",
       "value": "/System/Applications/Utilities/Terminal.app"
+    },
+    {
+      "iconPath": "/Users/$USER/Applications/Home Manager Apps/kitty.app",
+      "key": "k",
+      "type": "application",
+      "value": "/Users/$USER/Applications/Home Manager Apps/kitty.app"
     },
     {
       "actions": [

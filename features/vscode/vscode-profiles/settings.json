@@ -27,6 +27,7 @@
   "[typescriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+  "chat.disableAIFeatures": true,
   "diffEditor.ignoreTrimWhitespace": false,
   "diffEditor.renderSideBySide": true,
   "editor.accessibilitySupport": "off",
@@ -76,7 +77,6 @@
   "python.terminal.activateEnvironment": false,
   "remote.autoForwardPortsSource": "hybrid",
   "security.workspace.trust.untrustedFiles": "open",
-  "terminal.integrated.scrollback": 20000,
   "terminal.integrated.stickyScroll.enabled": false,
   "typescript.preferences.importModuleSpecifier": "relative",
   "typescript.updateImportsOnFileMove.enabled": "always",

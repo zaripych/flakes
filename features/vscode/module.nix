@@ -160,7 +160,7 @@ in {
             vscode-extensions.ms-vscode-remote.remote-ssh
             vscode-extensions.ms-vscode-remote.remote-ssh-edit
 
-            vscode-extensions.github.copilot
+            # vscode-extensions.github.copilot
             # pkgs.vscode-extensions.github.copilot-chat
             vscode-extensions.github.vscode-github-actions
 
@@ -170,6 +170,11 @@ in {
 
             vscode-extensions.catppuccin.catppuccin-vsc-icons
             vscode-extensions.lakshits11.best-themes-redefined
+          ];
+
+          d2-diagrams = [
+            vscode-extensions.rohanshetty.lspd2
+            vscode-extensions.kdheepak.d2-markdown-preview
           ];
 
           js-ts-extensions = [
@@ -202,7 +207,8 @@ in {
               shared-extensions
               ++ js-ts-extensions
               ++ python-extensions
-              ++ terraform-extensions
+              ++ d2-diagrams
+              # ++ terraform-extensions
               ++ builtins.concatMap (fn: (
                 if (builtins.isFunction fn)
                 then (fn vscode-extensions)
