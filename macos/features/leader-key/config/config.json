@@ -25,10 +25,10 @@
       "value": "/System/Applications/Utilities/Terminal.app"
     },
     {
-      "iconPath": "/Users/$USER/Applications/Home Manager Apps/kitty.app",
+      "iconPath": "~/Applications/Home Manager Apps/kitty.app",
       "key": "k",
       "type": "application",
-      "value": "/Users/$USER/Applications/Home Manager Apps/kitty.app"
+      "value": "~/Applications/Home Manager Apps/kitty.app"
     },
     {
       "actions": [

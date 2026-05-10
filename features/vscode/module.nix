@@ -5,16 +5,7 @@
   username,
   config,
   ...
-}: let
-  replaceComments = input:
-    builtins.concatStringsSep "\n"
-    (
-      builtins.filter
-      (item: !builtins.isList item)
-      (builtins.split "//[^\n]*"
-        input)
-    );
-in {
+}: {
   imports = [
     ../home-manager/module.nix
     {
@@ -41,6 +32,19 @@ in {
   };
 
   config = {
+    outOfStoreLinks.links = let
+      vscodeUserDir = "/Users/${username}/Library/Application Support/Code/User";
+    in {
+      "${vscodeUserDir}/settings.json" = {
+        flake = inputs.self;
+        linkFrom = "features/vscode/vscode-profiles/settings.json";
+      };
+      "${vscodeUserDir}/keybindings.json" = {
+        flake = inputs.self;
+        linkFrom = "features/vscode/vscode-profiles/keybindings.json";
+      };
+    };
+
     home-manager.users.${username} = let
       vscode-marketplace =
         if pkgs ? vscode-marketplace
@@ -52,80 +56,6 @@ in {
             else builtins.trace "No vscode-marketplace found!" null
           );
     in {
-      home.activation.vscodeRemoveBackupFiles = inputs.home-manager.lib.hm.dag.entryBefore ["checkLinkTargets"] ''
-        echo "Running vscode-remove-backup-files"
-
-        function compare_target_and_backup() {
-          TARGET="$1"
-          TARGET_BACKUP="$TARGET.backup"
-          if [ ! -f "$TARGET_BACKUP" ]; then
-            return
-          fi
-          echo ""
-          (${lib.getExe pkgs.git} diff \
-            <(cat "$TARGET_BACKUP" | ${lib.getExe pkgs.prettier} --parser json5 --no-config --stdin-filepath "$TARGET_BACKUP") \
-            <(cat "$TARGET" | ${lib.getExe pkgs.prettier} --parser json5 --no-config --stdin-filepath "$TARGET") | cat) || echo "Differences found between $TARGET and $TARGET_BACKUP"
-        }
-
-        function remove_backup_files() {
-          TARGET="$1"
-          TARGET_BACKUP="$TARGET.backup"
-          if [ -f "$TARGET_BACKUP" ]; then
-            echo "Removing existing backup: $TARGET_BACKUP"
-            rm -f "$TARGET_BACKUP"
-          fi
-        }
-
-        ROOT="$HOME/Library/Application Support/Code/User"
-        KEYBINDINGS="$ROOT/keybindings.json"
-        SETTINGS="$ROOT/settings.json"
-
-        compare_target_and_backup "$KEYBINDINGS"
-        compare_target_and_backup "$SETTINGS"
-
-        remove_backup_files "$KEYBINDINGS"
-        remove_backup_files "$SETTINGS"
-      '';
-      home.activation.vscodeMakeSettingsEditable = inputs.home-manager.lib.hm.dag.entryAfter ["linkGeneration"] ''
-        echo "Running vscode-allow-editing-settings"
-        # If keybindings is a link to /nix/store, then it's not editable
-        # so we need to check if it is a symlink and if so, then copy the
-        # symlinked resource and allow the user to change it
-
-        function is_symlink() {
-          [ -L "$1" ]
-        }
-
-        function make_editable_if_symlink() {
-          TARGET="$1"
-          TARGET_BACKUP="$TARGET.backup"
-          if is_symlink "$TARGET"; then
-            # Remove existing backup if it exists
-            if [ -f "$TARGET_BACKUP" ]; then
-              echo "Removing existing backup: $TARGET_BACKUP"
-              rm -f "$TARGET_BACKUP"
-            fi
-
-            echo "Copying $TARGET to $TARGET_BACKUP"
-            cp -v "$TARGET" "$TARGET_BACKUP"
-            chmod u+w "$TARGET_BACKUP"  # Make backup writable since it came from nix store
-            unlink "$TARGET"
-            echo "Creating editable copy of $TARGET"
-            cp -v "$TARGET_BACKUP" "$TARGET"
-            chmod u+w "$TARGET"
-          else
-            echo "Not a symlink, no need to copy: $TARGET"
-          fi
-        }
-
-        ROOT="$HOME/Library/Application Support/Code/User"
-        KEYBINDINGS="$ROOT/keybindings.json"
-        SETTINGS="$ROOT/settings.json"
-
-        make_editable_if_symlink "$KEYBINDINGS"
-        make_editable_if_symlink "$SETTINGS"
-      '';
-
       programs.vscode = {
         enable =
           if vscode-marketplace != null
@@ -194,14 +124,8 @@ in {
           terraform-extensions = [
             vscode-extensions.hashicorp.terraform
           ];
-
-          userSettings = builtins.fromJSON (replaceComments (pkgs.lib.readFile ./vscode-profiles/settings.json));
-          keybindings = builtins.fromJSON (replaceComments (pkgs.lib.readFile ./vscode-profiles/keybindings.json));
         in {
           default = {
-            userSettings = userSettings;
-            keybindings = keybindings;
-
             # extensions = shared-extensions ++ js-ts-extensions;
             extensions =
               shared-extensions

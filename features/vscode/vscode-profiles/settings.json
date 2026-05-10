@@ -56,8 +56,6 @@
     "scminput": false,
     "yaml": true
   },
-  "javascript.preferences.importModuleSpecifier": "relative",
-  "javascript.updateImportsOnFileMove.enabled": "always",
   "magit.display-buffer-function": "same-column",
   "nix.enableLanguageServer": true,
   "nix.formatterPath": "nixpkgs-fmt",
@@ -78,8 +76,8 @@
   "remote.autoForwardPortsSource": "hybrid",
   "security.workspace.trust.untrustedFiles": "open",
   "terminal.integrated.stickyScroll.enabled": false,
-  "typescript.preferences.importModuleSpecifier": "relative",
-  "typescript.updateImportsOnFileMove.enabled": "always",
+  "js/ts.preferences.importModuleSpecifier": "relative",
+  "js/ts.updateImportsOnFileMove.enabled": "always",
   "update.mode": "manual",
   "vim.easymotion": true,
   "vim.normalModeKeyBindingsNonRecursive": [
@@ -102,7 +100,6 @@
       ]
     }
   ],
-  "vim.useSystemClipboard": true,
   "vim.visualModeKeyBindingsNonRecursive": [
     {
       "before": ["<space>"],
@@ -119,6 +116,22 @@
       ]
     }
   ],
+  "vspacecode.bindingOverrides": [
+    {
+      "keys": "s.E",
+      "name": "Change all occurrances",
+      "type": "command",
+      "command": "vim.remap",
+      "args": {
+        "commands": [
+          {
+            "command": "editor.action.changeAll"
+          }
+        ]
+      }
+    }
+  ],
+  "vim.useSystemClipboard": true,
   "workbench.colorCustomizations": {
     "terminal.findMatchBorder": "#ffffff",
     "terminal.findMatchHighlightBorder": "#ffffff",
@@ -132,5 +145,8 @@
   },
   "workbench.iconTheme": "catppuccin-mocha",
   "zenMode.fullScreen": false,
-  "zenMode.hideLineNumbers": false
+  "zenMode.hideLineNumbers": false,
+  "D2.previewLayout": "elk",
+  "D2.previewTheme": "Buttered toast",
+  "D2.previewSketch": true
 }
