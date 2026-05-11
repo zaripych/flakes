@@ -1,0 +1,18 @@
+{
+  "providers": {
+    "openai": {
+      "modelOverrides": {
+        "gpt-5.5": {
+          "thinkingLevelMap": {
+            "minimal": null
+          }
+        },
+        "gpt-5.4-mini": {
+          "thinkingLevelMap": {
+            "minimal": null
+          }
+        }
+      }
+    }
+  }
+}

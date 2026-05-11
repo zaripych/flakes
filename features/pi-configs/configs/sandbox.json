@@ -1,0 +1,80 @@
+{
+  "enabled": true,
+  "allowBrowserProcess": true,
+  "network": {
+    "allowLocalBinding": true,
+    "allowAllUnixSockets": true,
+    "allowedDomains": [
+      "github.com",
+      "*.github.com",
+      "registry.npmjs.org",
+      "pypi.org",
+
+      "proxy.golang.org",
+      "sum.golang.org",
+      "go.dev",
+
+      "storage.googleapis.com",
+      "*.googleapis.com",
+      "oss.terrastruct.com",
+
+      "cache.nixos.org",
+      "channels.nixos.org",
+
+      "cdn.playwright.dev"
+    ],
+    "deniedDomains": []
+  },
+  "filesystem": {
+    "denyRead": ["/Users", "/home"],
+    "allowRead": [
+      ".",
+
+      "/nix/store",
+      "/tmp",
+      "/var/folders/",
+
+      "~/.config",
+      "~/.config/git/config",
+      "~/.local",
+      "~/.gitconfig",
+
+      "~/.cache/",
+      "~/.cache/pre-commit/",
+      "~/.cache/pre-commit/.lock",
+
+      "~/.pnpm-home",
+      "~/.pnpm-state",
+      "~/.nix-profile/",
+
+      "~/.agents/skills/",
+      "~/.pi/agent/extensions/",
+      "~/.pi/agent/AGENTS.md",
+      "~/.pi/agent/extensions/pi-sandbox/README.md",
+      "~/.pi/agent/sandbox.json",
+
+      "~/.claude/skills",
+
+      "~/Projects/",
+
+      "~/go/",
+
+      "~/Library/Caches/",
+      "~/Library/Application Support"
+    ],
+    "allowWrite": [
+      ".",
+      "/tmp",
+      "/var/folders/",
+
+      "~/.cache/",
+      "~/.cache/pre-commit/",
+      "~/.cache/pre-commit/.lock",
+
+      "~/go/",
+
+      "~/Library/Caches/"
+    ],
+    "denyWrite": [".env", ".env.*", "*.pem", "*.key", "sandbox.json"]
+  }
+}

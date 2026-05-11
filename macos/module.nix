@@ -35,6 +35,8 @@
 
     ../features/diagrams/module.nix
 
+    ../features/pi-configs/module.nix
+
     ./features/leader-key/module.nix
     # Services
     # After commenting out a launchd-backed service below, nix-darwin does
