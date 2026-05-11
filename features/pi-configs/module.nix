@@ -18,5 +18,9 @@
       flake = inputs.self;
       linkFrom = "features/pi-configs/configs/AGENTS.md";
     };
+    "${piAgentDir}/settings.json" = {
+      flake = inputs.self;
+      linkFrom = "features/pi-configs/configs/settings.json";
+    };
   };
 }
