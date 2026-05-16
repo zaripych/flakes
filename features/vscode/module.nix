@@ -96,7 +96,7 @@
 
             vscode-extensions.bodil.file-browser
             vscode-extensions.rodrigocfd.format-comment
-            vscode-extensions.eamodio.gitlens
+            # vscode-extensions.eamodio.gitlens
 
             vscode-extensions.catppuccin.catppuccin-vsc-icons
             vscode-extensions.lakshits11.best-themes-redefined
@@ -111,9 +111,9 @@
             vscode-extensions.dbaeumer.vscode-eslint
             vscode-extensions.esbenp.prettier-vscode
             vscode-extensions.yoavbls.pretty-ts-errors
-            vscode-extensions.wallabyjs.quokka-vscode
-            vscode-extensions.wallabyjs.wallaby-vscode
-            vscode-extensions.wallabyjs.console-ninja
+            # vscode-extensions.wallabyjs.quokka-vscode
+            # vscode-extensions.wallabyjs.wallaby-vscode
+            # vscode-extensions.wallabyjs.console-ninja
           ];
 
           python-extensions = [

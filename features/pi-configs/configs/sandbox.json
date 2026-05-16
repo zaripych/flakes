@@ -21,7 +21,15 @@
       "cache.nixos.org",
       "channels.nixos.org",
 
-      "cdn.playwright.dev"
+      "cdn.playwright.dev",
+
+      "gitlab.com",
+
+      "*.atlassian.net",
+      "atlassian.com",
+      "api.atlassian.com",
+      "auth.atlassian.com",
+      "id.atlassian.com"
     ],
     "deniedDomains": []
   },
@@ -29,6 +37,7 @@
     "denyRead": ["/Users", "/home"],
     "allowRead": [
       ".",
+      "~/.ssh/known_hosts",
 
       "/nix/store",
       "/tmp",
@@ -42,6 +51,8 @@
       "~/.cache/",
       "~/.cache/pre-commit/",
       "~/.cache/pre-commit/.lock",
+
+      "~/.npm",
 
       "~/.pnpm-home",
       "~/.pnpm-state",
@@ -59,8 +70,7 @@
 
       "~/go/",
 
-      "~/Library/Caches/",
-      "~/Library/Application Support"
+      "~/Library/Caches/"
     ],
     "allowWrite": [
       ".",

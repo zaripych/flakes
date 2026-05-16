@@ -1,38 +1,38 @@
 {
   "[dockerfile]": {
-    "editor.defaultFormatter": "ms-azuretools.vscode-docker"
+    "editor.defaultFormatter": "ms-azuretools.vscode-docker",
   },
   "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
   "[json]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
   "[jsonc]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
   "[markdown]": {
-    "editor.wordWrap": "wordWrapColumn"
+    "editor.wordWrap": "wordWrapColumn",
   },
   "[python]": {
     "editor.defaultFormatter": "charliermarsh.ruff",
-    "editor.formatOnType": true
+    "editor.formatOnType": true,
   },
   "[shellscript]": {
-    "editor.defaultFormatter": "foxundermoon.shell-format"
+    "editor.defaultFormatter": "foxundermoon.shell-format",
   },
   "[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
   "[typescriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
   "chat.disableAIFeatures": true,
   "diffEditor.ignoreTrimWhitespace": false,
   "diffEditor.renderSideBySide": true,
   "editor.accessibilitySupport": "off",
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit"
+    "source.fixAll.eslint": "explicit",
   },
   "editor.formatOnSave": true,
   "editor.gotoLocation.alternativeDeclarationCommand": "editor.action.goToTypeDefinition",
@@ -54,7 +54,7 @@
     "markdown": true,
     "plaintext": true,
     "scminput": false,
-    "yaml": true
+    "yaml": true,
   },
   "magit.display-buffer-function": "same-column",
   "nix.enableLanguageServer": true,
@@ -62,12 +62,12 @@
   "nix.serverSettings": {
     "nil": {
       "diagnostics": {
-        "ignored": []
+        "ignored": [],
       },
       "formatting": {
-        "command": ["alejandra"]
-      }
-    }
+        "command": ["alejandra"],
+      },
+    },
   },
   "notebook.defaultFormatter": "charliermarsh.ruff",
   "notebook.formatOnSave.enabled": true,
@@ -83,11 +83,11 @@
   "vim.normalModeKeyBindingsNonRecursive": [
     {
       "before": ["u"],
-      "commands": []
+      "commands": [],
     },
     {
       "before": ["<space>"],
-      "commands": ["vspacecode.space"]
+      "commands": ["vspacecode.space"],
     },
     {
       "before": [","],
@@ -95,15 +95,15 @@
         "vspacecode.space",
         {
           "args": "m",
-          "command": "whichkey.triggerKey"
-        }
-      ]
-    }
+          "command": "whichkey.triggerKey",
+        },
+      ],
+    },
   ],
   "vim.visualModeKeyBindingsNonRecursive": [
     {
       "before": ["<space>"],
-      "commands": ["vspacecode.space"]
+      "commands": ["vspacecode.space"],
     },
     {
       "before": [","],
@@ -111,10 +111,10 @@
         "vspacecode.space",
         {
           "args": "m",
-          "command": "whichkey.triggerKey"
-        }
-      ]
-    }
+          "command": "whichkey.triggerKey",
+        },
+      ],
+    },
   ],
   "vspacecode.bindingOverrides": [
     {
@@ -125,28 +125,30 @@
       "args": {
         "commands": [
           {
-            "command": "editor.action.changeAll"
-          }
-        ]
-      }
-    }
+            "command": "editor.action.changeAll",
+          },
+        ],
+      },
+    },
   ],
   "vim.useSystemClipboard": true,
   "workbench.colorCustomizations": {
     "terminal.findMatchBorder": "#ffffff",
     "terminal.findMatchHighlightBorder": "#ffffff",
-    "terminal.selectionForeground": "#ffcf60"
+    "terminal.selectionForeground": "#ffcf60",
   },
-  "workbench.colorTheme": "Best Themes - One Dark Pro No Italic",
+  "workbench.colorTheme": "Best Themes - Lunar",
   "workbench.editor.revealIfOpen": false,
   "workbench.editorAssociations": {
     "*.copilotmd": "vscode.markdown.preview.editor",
-    "git-rebase-todo": "default"
+    "git-rebase-todo": "default",
   },
   "workbench.iconTheme": "catppuccin-mocha",
   "zenMode.fullScreen": false,
   "zenMode.hideLineNumbers": false,
   "D2.previewLayout": "elk",
   "D2.previewTheme": "Buttered toast",
-  "D2.previewSketch": true
+  "D2.previewSketch": true,
+  "cSpell.userWords": ["Configurators"],
+  "wallaby.startAutomatically": false,
 }
