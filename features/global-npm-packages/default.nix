@@ -3,13 +3,14 @@
   lib,
   nodejs,
   pnpm_9,
+  pnpmConfigHook,
+  fetchPnpmDeps,
   src,
   hash ? "",
 }: let
   packageJson = lib.importJSON "${src}/package.json";
   name = packageJson.name;
   version = packageJson.version + "-" + (builtins.substring 0 4 (builtins.hashFile "sha256" "${src}/package.json"));
-  pnpm = pnpm_9;
 in
   stdenv.mkDerivation (finalAttrs: {
     name = "global-npm-packages-${name}-${version}";
@@ -20,7 +21,8 @@ in
 
     nativeBuildInputs = [
       nodejs
-      pnpm.configHook
+      pnpm_9
+      pnpmConfigHook
     ];
 
     buildPhase = ''
@@ -53,8 +55,9 @@ in
       runHook postInstall
     '';
 
-    pnpmDeps = pnpm.fetchDeps {
+    pnpmDeps = fetchPnpmDeps {
       inherit (finalAttrs) pname version src;
+      pnpm = pnpm_9;
       fetcherVersion = 2;
       hash = hash;
     };
