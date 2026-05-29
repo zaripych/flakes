@@ -59,13 +59,13 @@ When adding a new feature:
 
 # Workflows
 
-Make sure to test every change by building the configuration first to ensure that your modifications work as expected. To test the build on the current host use the test script:
+Make sure to test every change by building the configuration first to ensure that your modifications work as expected. To test the macOS build use the test script:
 
 ```bash
-./scripts/test-build.sh
+./scripts/test-macos.sh
 ```
 
-This command runs `system-refresh build`, which will:
+This command runs `nix build ./macos#darwinConfigurations.default.system`, which will:
 
 - Build the current configuration without applying it, involving:
   - Evaluation of the nix expressions in the flake files
@@ -85,7 +85,7 @@ system-refresh switch
 - When debugging activation scripts, you can view the system activation script in `./result/activate`
 - For home-manager activation scripts, determining the location might require inspecting the build output
 
-**Note:** The `./scripts/test-build.sh` script has not been tested on Linux yet and may need adjustments for NixOS.
+**Note:** There is no equivalent Linux test script yet; add one before relying on this workflow for NixOS.
 
 ## How to fix "attribute 'xxx' missing" errors
 
