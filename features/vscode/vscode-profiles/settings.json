@@ -33,6 +33,7 @@
   "editor.accessibilitySupport": "off",
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit",
+    "source.fixAll.biome": "explicit",
   },
   "editor.formatOnSave": true,
   "editor.gotoLocation.alternativeDeclarationCommand": "editor.action.goToTypeDefinition",
@@ -151,4 +152,14 @@
   "D2.previewSketch": true,
   "cSpell.userWords": ["Configurators"],
   "wallaby.startAutomatically": false,
+  "json.schemaDownload.trustedDomains": {
+    "https://schemastore.azurewebsites.net/": true,
+    "https://raw.githubusercontent.com/microsoft/vscode/": true,
+    "https://raw.githubusercontent.com/devcontainers/spec/": true,
+    "https://www.schemastore.org/": true,
+    "https://json.schemastore.org/": true,
+    "https://json-schema.org/": true,
+    "https://developer.microsoft.com/json-schemas/": true,
+    "https://biomejs.dev": true,
+  },
 }

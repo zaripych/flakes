@@ -199,10 +199,9 @@
     "when": "textInputFocus && !editorReadonly"
   },
   {
-    "args": {
-      "text": "\\r\n"
-    },
+    "key": "shift+enter",
     "command": "workbench.action.terminal.sendSequence",
-    "key": "shift+enter"
+    "args": { "text": "\u001b[13;2u" },
+    "when": "terminalFocus"
   }
 ]
