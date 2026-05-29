@@ -1,4 +1,3 @@
-
 # Communication
 
 Prioritize substance over compliments. Never soften criticism. If an idea has holes, say so directly—"This won't scale because X" is better than "Have you considered...". Challenge assumptions. Point out errors. Useful feedback matters more than comfortable feedback.
@@ -14,6 +13,10 @@ Prioritize substance over compliments. Never soften criticism. If an idea has ho
 - **Ask before assuming.** When a request is ambiguous — unclear scope, multiple valid interpretations, or missing context — ask clarifying questions before proceeding. Never guess intent or forge ahead on assumptions.
 
 - **Never rename established terms.** Use exact class names, function names, and domain terms as they appear in the codebase and documentation. No abbreviations, no paraphrasing. Examples: "shared modules" not "modules", `ModuleToPackage` not "ToPackage", `OverlayFSCommands` not "the overlay class".
+
+# Temporary directory
+
+Use `$TMPDIR` as temporary directory destination for bash commands/experiments. `/tmp` is not writable on this system.
 
 # Node.js / TypeScript
 

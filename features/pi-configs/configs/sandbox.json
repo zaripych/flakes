@@ -49,6 +49,7 @@
       "~/.gitconfig",
 
       "~/.cache/",
+      "~/.cache/pi/tmp",
       "~/.cache/pre-commit/",
       "~/.cache/pre-commit/.lock",
 
@@ -78,6 +79,7 @@
       "/var/folders/",
 
       "~/.cache/",
+      "~/.cache/pi/tmp",
       "~/.cache/pre-commit/",
       "~/.cache/pre-commit/.lock",
 

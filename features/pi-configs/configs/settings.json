@@ -1,5 +1,5 @@
 {
-  "lastChangelogVersion": "0.74.0",
+  "lastChangelogVersion": "0.77.0",
   "hideThinkingBlock": true,
   "skills": [
     "~/.claude/skills"
@@ -8,10 +8,11 @@
   "defaultProvider": "openai",
   "defaultModel": "gpt-5.5",
   "enabledModels": [
-    "anthropic/claude-opus-4-7",
-    "anthropic/claude-opus-4-6",
-    "anthropic/claude-sonnet-4-6",
     "openai/gpt-5.5",
-    "openai/gpt-5.4-mini"
-  ]
+    "anthropic/claude-opus-4-8"
+  ],
+  "compaction": {
+    "enabled": true
+  },
+  "steeringMode": "one-at-a-time"
 }
