@@ -26,7 +26,7 @@
     flake-parts.url = "github:hercules-ci/flake-parts";
     flake-parts.inputs.nixpkgs-lib.follows = "nixpkgs-lib";
 
-    nvf.url = "github:notashelf/nvf/v0.8";
+    nvf.url = "github:notashelf/nvf";
     nvf.inputs.systems.follows = "systems";
     nvf.inputs.nixpkgs.follows = "nixpkgs";
     nvf.inputs.flake-parts.follows = "flake-parts";

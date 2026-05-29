@@ -28,7 +28,7 @@
         format.enable = true;
       };
       markdown.enable = true;
-      ts.enable = true;
+      typescript.enable = true;
     };
 
     statusline.lualine.enable = true;
