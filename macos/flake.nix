@@ -65,7 +65,6 @@
 
         ../features/nvim/part.nix
         ../features/zsh/part.nix
-        ./features/skhd/part.nix
         ./features/aerospace-swipe/part.nix
 
         {

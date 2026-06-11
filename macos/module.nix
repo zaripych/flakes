@@ -46,8 +46,6 @@
     #   launchctl bootout gui/$(id -u)/org.nixos.<name>
     #   rm ~/Library/LaunchAgents/org.nixos.<name>.plist
     #   system-refresh switch
-    # ./features/yabai/module.nix
-    # ./features/skhd/module.nix
     ./features/aerospace/module.nix
     ./features/aerospace-swipe/module.nix
   ];
