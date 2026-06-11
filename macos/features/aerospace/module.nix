@@ -1,11 +1,24 @@
-{...}: let
+{config, ...}: let
   # after-startup-command runs from launchd with PATH=/usr/bin:/bin:/usr/sbin:/sbin,
   # so use the system profile path instead of relying on `aerospace` resolution.
   aerospace = "/run/current-system/sw/bin/aerospace";
 in {
   # Enable Mission Control "Group windows by application" for better AeroSpace compatibility.
   # Equivalent to: defaults write com.apple.dock expose-group-apps -bool true
-  system.defaults.dock.expose-group-apps = true;
+  #
+  # Deliberately NOT using `system.defaults.dock.expose-group-apps` here:
+  # nix-darwin restarts the Dock on every activation whenever any
+  # `system.defaults.dock.*` option is set, and killing the Dock restores all
+  # minimized windows, which AeroSpace then piles onto the focused workspace.
+  # Instead, write the default idempotently and only restart the Dock when the
+  # value actually changes.
+  system.activationScripts.postActivation.text = ''
+    if [ "$(launchctl asuser "$(id -u -- ${config.system.primaryUser})" sudo --user=${config.system.primaryUser} -- defaults read com.apple.dock expose-group-apps 2>/dev/null)" != "1" ]; then
+      echo >&2 "enabling Dock expose-group-apps and restarting Dock..."
+      launchctl asuser "$(id -u -- ${config.system.primaryUser})" sudo --user=${config.system.primaryUser} -- defaults write com.apple.dock expose-group-apps -bool true
+      killall -qu ${config.system.primaryUser} Dock || true
+    fi
+  '';
 
   services.aerospace = {
     enable = true;
