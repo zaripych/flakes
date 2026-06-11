@@ -31,6 +31,11 @@
     nvf.inputs.nixpkgs.follows = "nixpkgs";
     nvf.inputs.flake-parts.follows = "flake-parts";
     nvf.inputs.flake-compat.follows = "flake-compat";
+
+    tmux-which-key = {
+      url = "github:alexwforsythe/tmux-which-key";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs @ {

@@ -5,6 +5,7 @@
 
     ../features/system-refresh/module.nix
     ../features/terminal/module.nix
+    ../features/tmux/module.nix
 
     ../features/nix/module.nix
     inputs.self.darwinModules.zsh

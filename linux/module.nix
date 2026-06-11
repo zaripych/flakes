@@ -8,6 +8,7 @@
     ../features/home-manager/module.nix
 
     ../features/nvim/module.nix
+    ../features/tmux/module.nix
 
     ../features/nix/module.nix
 
