@@ -28,8 +28,6 @@
     ../features/vscode/module.nix
     ../features/npm-packages/module.nix
 
-    ../features/1password-gui/module.nix
-    ../features/docker-desktop/module.nix
     ../features/trace-packages/module.nix
     ../features/television/module.nix
     ../features/python/module.nix
