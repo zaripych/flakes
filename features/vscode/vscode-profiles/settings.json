@@ -138,7 +138,6 @@
     "terminal.findMatchHighlightBorder": "#ffffff",
     "terminal.selectionForeground": "#ffcf60",
   },
-  "workbench.colorTheme": "Best Themes - Lunar",
   "workbench.editor.revealIfOpen": false,
   "workbench.editorAssociations": {
     "*.copilotmd": "vscode.markdown.preview.editor",
@@ -162,4 +161,5 @@
     "https://developer.microsoft.com/json-schemas/": true,
     "https://biomejs.dev": true,
   },
+  "workbench.colorTheme": "Best Themes - Zenith",
 }
