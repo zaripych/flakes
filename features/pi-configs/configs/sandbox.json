@@ -25,14 +25,19 @@
       "auth.atlassian.com",
       "id.atlassian.com",
       "nvd.nist.gov",
-      "api.osv.dev"
+      "api.osv.dev",
+      "raw.githubusercontent.com"
     ],
     "deniedDomains": []
   },
   "filesystem": {
     "denyRead": [
       "/Users",
-      "/home"
+      "/home",
+      ".env",
+      ".env.*",
+      "*.pem",
+      "*.key"
     ],
     "allowRead": [
       ".",
@@ -60,7 +65,9 @@
       "~/.claude/skills",
       "~/Projects/",
       "~/go/",
-      "~/Library/Caches/"
+      "~/Library/Caches/",
+      "~/Library/Application Support/glab-cli/config.yml",
+      "~/Library/Application Support/glab-cli/aliases.yml"
     ],
     "allowWrite": [
       ".",

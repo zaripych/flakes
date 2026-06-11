@@ -56,5 +56,13 @@ in {
       flake = inputs.self;
       linkFrom = "features/pi-configs/configs/web-fetch.json";
     };
+    "${piAgentDir}/review.yaml" = {
+      flake = inputs.self;
+      linkFrom = "features/pi-configs/configs/review.yaml";
+    };
+    "${piAgentDir}/review-prompt.md" = {
+      flake = inputs.self;
+      linkFrom = "features/pi-configs/configs/review-prompt.md";
+    };
   };
 }
