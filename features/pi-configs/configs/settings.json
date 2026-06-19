@@ -1,12 +1,12 @@
 {
-  "lastChangelogVersion": "0.79.1",
-  "hideThinkingBlock": true,
+  "lastChangelogVersion": "0.79.6",
+  "hideThinkingBlock": false,
   "skills": [
     "~/.claude/skills"
   ],
   "defaultThinkingLevel": "high",
-  "defaultProvider": "anthropic",
-  "defaultModel": "claude-fable-5",
+  "defaultProvider": "openai",
+  "defaultModel": "gpt-5.5",
   "enabledModels": [
     "openai/gpt-5.5",
     "anthropic/claude-opus-4-8",
@@ -16,5 +16,6 @@
   "compaction": {
     "enabled": true
   },
-  "steeringMode": "one-at-a-time"
+  "steeringMode": "one-at-a-time",
+  "theme": "dark"
 }

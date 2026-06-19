@@ -18,6 +18,15 @@ Prioritize substance over compliments. Never soften criticism. If an idea has ho
 
 Use `$TMPDIR` as temporary directory destination for bash commands/experiments. `/tmp` is not writable on this system.
 
+# Prose/documentation writing
+
+- Strictly no semicolons in prose please
+- Do not use parenthesis to add detail. Prefer separate sentence.
+- No duplication or extra negation. Drop any clause or sentence that restates an earlier one. Within a sentence, "Indent with two spaces, never use tabs" says the same thing twice. Across sentences, "This file is read-only. Nothing in it can be changed." repeats one point in two sentences. Keep the single phrasing that best fits the surrounding style.
+- Do not infect documentation with unrelated information from current context. If a user asked to add something to the documentation - only add information user asked, do not add any extras.
+- When editing documents, stick to the same style the document already uses
+- When adding examples to documents, try to use same domain as in the document, instead of borrowing examples from the surrounding code or the code you bug-fixed refactored (there is no point in showing how not to code if you already refactored all the code)
+
 # Node.js / TypeScript
 
 - Never use sync filesystem APIs (`statSync`, `readFileSync`, `writeFileSync`, etc.). Always use the async equivalents from `fs/promises`.

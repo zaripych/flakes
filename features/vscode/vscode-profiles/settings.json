@@ -162,4 +162,5 @@
     "https://biomejs.dev": true,
   },
   "workbench.colorTheme": "Best Themes - Zenith",
+  "extensions.ignoreRecommendations": true,
 }
