@@ -6,7 +6,7 @@
 
   # Allow pnpm to install to the home directory
   programs.zsh.shellInit = ''
-    export PNPM_HOME=~/.pnpm-home
-    export PATH=~/.pnpm-home/:~/.pnpm-home/bin:$PATH
+    export PNPM_HOME="$HOME/.pnpm-home"
+    export PATH="$PNPM_HOME/bin:$PATH"
   '';
 }
