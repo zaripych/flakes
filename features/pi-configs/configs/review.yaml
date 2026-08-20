@@ -1,4 +1,6 @@
 model:
   chooseFrom:
-    - anthropic/claude-opus-4-8
-    - openai/gpt-5.5
+    - anthropic/claude-opus-5
+    - openai/gpt-5.6-sol
+    - neuralwatt/deepseek-v4-flash
+    - neuralwatt/kimi-k3
