@@ -46,6 +46,7 @@
     #   system-refresh switch
     ./features/aerospace/module.nix
     ./features/aerospace-swipe/module.nix
+    ./features/anki-sync-server/module.nix
   ];
 
   services.aerospace-swipe.settings = {
